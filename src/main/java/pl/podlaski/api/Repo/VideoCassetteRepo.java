@@ -1,4 +1,4 @@
-package pl.podlaski.api.DAO;
+package pl.podlaski.api.Repo;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

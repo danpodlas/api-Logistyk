@@ -1,11 +1,11 @@
-package pl.podlaski.api.Manager;
+package pl.podlaski.api.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.podlaski.api.DAO.Entity.VideoCassette;
-import pl.podlaski.api.DAO.VideoCassetteRepo;
+import pl.podlaski.api.Repo.VideoCassetteRepo;
 
 import java.time.LocalDate;
 import java.util.Optional;
