@@ -5,64 +5,66 @@ import pl.podlaski.api.DAO.Constans.RodzajeKosztow;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Koszty")
 public class KosztyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @OneToOne
     @JoinColumn(name = "samochod_id", referencedColumnName = "id")
-    private SamochodEntity samochodEntity;
+    private SamochodEntity samochodKoszty;
 
-    private RodzajeKosztow rodzajeKosztow;
+    private RodzajeKosztow radzajekosztow;
     private Double kwota;
     private String data;
     private String notka;
 
     @OneToOne
-    @JoinColumn(name = "firmyEntity_id", referencedColumnName = "id")
-    private FirmyEntity przyjmfirmyEntity;
+    @JoinColumn(name = "firmy_id", referencedColumnName = "id")
+    private FirmyEntity kosztyFirmy;
 
     @OneToOne
-    @JoinColumn(name = "klientEntity_id", referencedColumnName = "id")
-    private KierowcaEntity kierowcaEntity;
+    @JoinColumn(name = "kierowca_id", referencedColumnName = "id")
+    private KierowcaEntity kosztyKierowca;
 
     public KosztyEntity() {
     }
 
-    public KosztyEntity(Long id, SamochodEntity samochodEntity, RodzajeKosztow rodzajeKosztow, Double kwota, String data, String notka, FirmyEntity przyjmfirmyEntity, KierowcaEntity kierowcaEntity) {
-        this.id = id;
-        this.samochodEntity = samochodEntity;
-        this.rodzajeKosztow = rodzajeKosztow;
-        this.kwota = kwota;
-        this.data = data;
-        this.notka = notka;
-        this.przyjmfirmyEntity = przyjmfirmyEntity;
-        this.kierowcaEntity = kierowcaEntity;
-    }
+//    public KosztyEntity(Long id, SamochodEntity samochodEntity, RodzajeKosztow rodzajeKosztow, Double kwota, String data, String notka, FirmyEntity przyjmfirmyEntity, KierowcaEntity kierowcaEntity) {
+//        this.id = id;
+//        this.samochodEntity = samochodEntity;
+//        this.rodzajeKosztow = rodzajeKosztow;
+//        this.kwota = kwota;
+//        this.data = data;
+//        this.notka = notka;
+//        this.przyjmfirmyEntity = przyjmfirmyEntity;
+//        this.kierowcaEntity = kierowcaEntity;
+//    }
 
-    public Long getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public SamochodEntity getSamochodEntity() {
-        return samochodEntity;
+    public SamochodEntity getSamochodKoszty() {
+        return samochodKoszty;
     }
 
-    public void setSamochodEntity(SamochodEntity samochodEntity) {
-        this.samochodEntity = samochodEntity;
+    public void setSamochodKoszty(SamochodEntity samochodKoszty) {
+        this.samochodKoszty = samochodKoszty;
     }
 
-    public RodzajeKosztow getRodzajeKosztow() {
-        return rodzajeKosztow;
+    public RodzajeKosztow getRadzajekosztow() {
+        return radzajekosztow;
     }
 
-    public void setRodzajeKosztow(RodzajeKosztow rodzajeKosztow) {
-        this.rodzajeKosztow = rodzajeKosztow;
+    public void setRadzajekosztow(RodzajeKosztow radzajekosztow) {
+        this.radzajekosztow = radzajekosztow;
     }
 
     public Double getKwota() {
@@ -89,19 +91,19 @@ public class KosztyEntity {
         this.notka = notka;
     }
 
-    public FirmyEntity getPrzyjmfirmyEntity() {
-        return przyjmfirmyEntity;
+    public FirmyEntity getKosztyFirmy() {
+        return kosztyFirmy;
     }
 
-    public void setPrzyjmfirmyEntity(FirmyEntity przyjmfirmyEntity) {
-        this.przyjmfirmyEntity = przyjmfirmyEntity;
+    public void setKosztyFirmy(FirmyEntity kosztyFirmy) {
+        this.kosztyFirmy = kosztyFirmy;
     }
 
-    public KierowcaEntity getKierowcaEntity() {
-        return kierowcaEntity;
+    public KierowcaEntity getKosztyKierowca() {
+        return kosztyKierowca;
     }
 
-    public void setKierowcaEntity(KierowcaEntity kierowcaEntity) {
-        this.kierowcaEntity = kierowcaEntity;
+    public void setKosztyKierowca(KierowcaEntity kosztyKierowca) {
+        this.kosztyKierowca = kosztyKierowca;
     }
 }

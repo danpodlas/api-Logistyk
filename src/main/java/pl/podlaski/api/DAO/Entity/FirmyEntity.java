@@ -1,16 +1,14 @@
 package pl.podlaski.api.DAO.Entity;
 
-import pl.podlaski.api.DAO.Constans.Role;
-
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Firma")
 public class FirmyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    private String regon;
     private String nip;
     private String telefonkontaktowy;
     private String miasto;
@@ -19,39 +17,41 @@ public class FirmyEntity {
     private String email;
     private String haslo;
     private String numerkonta;
-    private Role role;
+
+    @OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name="role_id")
+    private RoleEntity roleFirmy;
+
+    @OneToOne(mappedBy="kosztyFirmy",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private KosztyEntity kosztyEntity;
+
+    @OneToOne(mappedBy="zleceniFirmy",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private ZlecenieEntity zlecZlec;
+
+    @OneToOne(mappedBy="przyjmFirmy",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private ZlecenieEntity przyjmZlec;
 
     public FirmyEntity() {
     }
 
-    public FirmyEntity(Long id, String regon, String nip, String telefonkontaktowy, String miasto, String ulica, String nrdomu, String email, String haslo, String numerkonta, Role role, ZlecenieEntity zlecenieEntity) {
-        this.id = id;
-        this.regon = regon;
-        this.nip = nip;
-        this.telefonkontaktowy = telefonkontaktowy;
-        this.miasto = miasto;
-        this.ulica = ulica;
-        this.nrdomu = nrdomu;
-        this.email = email;
-        this.haslo = haslo;
-        this.numerkonta = numerkonta;
-        this.role = role;
-    }
+//    public FirmyEntity(String nip, String telefonkontaktowy, String miasto, String ulica, String nrdomu, String email, String haslo, String numerkonta, RoleName role, ZlecenieEntity zlecenieEntity) {
+//        this.nip = nip;
+//        this.telefonkontaktowy = telefonkontaktowy;
+//        this.miasto = miasto;
+//        this.ulica = ulica;
+//        this.nrdomu = nrdomu;
+//        this.email = email;
+//        this.haslo = haslo;
+//        this.numerkonta = numerkonta;
+//        this.role = role;
+//    }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public String getRegon() {
-        return regon;
-    }
-
-    public void setRegon(String regon) {
-        this.regon = regon;
     }
 
     public String getNip() {
@@ -116,13 +116,5 @@ public class FirmyEntity {
 
     public void setNumerkonta(String numerkonta) {
         this.numerkonta = numerkonta;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }

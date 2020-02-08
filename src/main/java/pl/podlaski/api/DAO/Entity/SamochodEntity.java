@@ -1,37 +1,30 @@
 package pl.podlaski.api.DAO.Entity;
 
 import pl.podlaski.api.DAO.Constans.Przyczepy;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
+@Table(name = "Samochod")
 public class SamochodEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String marka;
     private String model;
-    private Date rokprodukcji;
+    private String rokprodukcji;
     private int przebieg;
     private String numerrejestracyjny;
     private String typpojazdu;
     private Przyczepy przyczepy;
 
+    @OneToOne(mappedBy="samochodKoszty",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private KosztyEntity kosztyEntity;
+
     public SamochodEntity() {
     }
-//    @OneToOne
-//    @JoinColumn(name = "kierowcaEntity_id", referencedColumnName = "id")
-//    private KierowcaEntity kierowcaEntity;
-//
-//    @OneToOne
-//    @JoinColumn(name = "firmyEntity_id", referencedColumnName = "id")
-//    private FirmyEntity firmyEntity;
 
-
-    public SamochodEntity(Long id, String marka, String model, Date rokprodukcji, int przebieg, String numerrejestracyjny, String typpojazdu, Przyczepy przyczepy) {
-        this.id = id;
+    public SamochodEntity(String marka, String model, String rokprodukcji, int przebieg, String numerrejestracyjny, String typpojazdu, Przyczepy przyczepy) {
         this.marka = marka;
         this.model = model;
         this.rokprodukcji = rokprodukcji;
@@ -41,11 +34,11 @@ public class SamochodEntity {
         this.przyczepy = przyczepy;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -65,11 +58,11 @@ public class SamochodEntity {
         this.model = model;
     }
 
-    public Date getRokprodukcji() {
+    public String getRokprodukcji() {
         return rokprodukcji;
     }
 
-    public void setRokprodukcji(Date rokprodukcji) {
+    public void setRokprodukcji(String rokprodukcji) {
         this.rokprodukcji = rokprodukcji;
     }
 
@@ -104,12 +97,4 @@ public class SamochodEntity {
     public void setPrzyczepy(Przyczepy przyczepy) {
         this.przyczepy = przyczepy;
     }
-
-//    public KierowcaEntity getKierowcaEntity() {
-//        return kierowcaEntity;
-//    }
-//
-//    public void setKierowcaEntity(KierowcaEntity kierowcaEntity) {
-//        this.kierowcaEntity = kierowcaEntity;
-//    }
 }

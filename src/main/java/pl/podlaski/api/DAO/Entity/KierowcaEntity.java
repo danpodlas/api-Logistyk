@@ -1,6 +1,5 @@
 package pl.podlaski.api.DAO.Entity;
 
-import pl.podlaski.api.DAO.Constans.Role;
 import javax.persistence.*;
 
 @Entity
@@ -22,31 +21,34 @@ public class KierowcaEntity {
     private String email;
     private String haslo;
     private String numerkonta;
-    private Role role;
 
-    @OneToOne
-    @JoinColumn(name = "samochod_id", referencedColumnName = "id")
-    private SamochodEntity samochodEntity;
+    @OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name="role_id")
+    private RoleEntity roleKierowca;
+
+    @OneToOne(mappedBy="kosztyKierowca",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private KosztyEntity kosztyEntity;
+
+    @OneToOne(mappedBy="przyjmKierowca",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private ZlecenieEntity zlecenieEntity;
 
     public KierowcaEntity() {
     }
 
-    public KierowcaEntity(Long id, String imie, String nazwisko, String peselnip, String telefon, String miasto, String ulica, String nrdomu, String datazatrudnienia, String email, String haslo, String numerkonta, Role role, SamochodEntity samochodEntity) {
-        this.id = id;
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.peselnip = peselnip;
-        this.telefon = telefon;
-        this.miasto = miasto;
-        this.ulica = ulica;
-        this.nrdomu = nrdomu;
-        this.datazatrudnienia = datazatrudnienia;
-        this.email = email;
-        this.haslo = haslo;
-        this.numerkonta = numerkonta;
-        this.role = role;
-        this.samochodEntity=samochodEntity;
-    }
+//    public KierowcaEntity(Long id, String imie, String nazwisko, String peselnip, String telefon, String miasto, String ulica, String nrdomu, String datazatrudnienia, String email, String haslo, String numerkonta, RoleName role, SamochodEntity samochodEntity) {
+//        this.id = id;
+//        this.imie = imie;
+//        this.nazwisko = nazwisko;
+//        this.peselnip = peselnip;
+//        this.telefon = telefon;
+//        this.miasto = miasto;
+//        this.ulica = ulica;
+//        this.nrdomu = nrdomu;
+//        this.datazatrudnienia = datazatrudnienia;
+//        this.email = email;
+//        this.haslo = haslo;
+//        this.numerkonta = numerkonta;
+//    }
 
     public Long getId() {
         return id;
@@ -144,19 +146,11 @@ public class KierowcaEntity {
         this.numerkonta = numerkonta;
     }
 
-    public Role getRole() {
-        return role;
+    public RoleEntity getRoleKierowca() {
+        return roleKierowca;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public SamochodEntity getSamochodEntity() {
-        return samochodEntity;
-    }
-
-    public void setSamochodEntity(SamochodEntity samochodEntity) {
-        this.samochodEntity = samochodEntity;
+    public void setRoleKierowca(RoleEntity roleKierowca) {
+        this.roleKierowca = roleKierowca;
     }
 }

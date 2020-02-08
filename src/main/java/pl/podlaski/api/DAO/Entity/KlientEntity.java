@@ -1,18 +1,14 @@
 package pl.podlaski.api.DAO.Entity;
 
-import pl.podlaski.api.DAO.Constans.Role;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "Klient")
 public class KlientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String imie;
     private String nazwisko;
     private String pesel;
@@ -23,31 +19,18 @@ public class KlientEntity {
     private String email;
     private String haslo;
 
-    private Role role;
+    @OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name="role_id")
+    private RoleEntity roleKlient;
 
-    public KlientEntity() {
-    }
+    @OneToOne(mappedBy="zlecenieKlient",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private ZlecenieEntity zlecenieEntity;
 
-    public KlientEntity(Long id, String imie, String nazwisko, String pesel, String telefon, String miasto, String ulica, String nrdomu, String email, String haslo, Role role) {
-        this.id = id;
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.pesel = pesel;
-        this.telefon = telefon;
-        this.miasto = miasto;
-        this.ulica = ulica;
-        this.nrdomu = nrdomu;
-        this.email = email;
-        this.haslo = haslo;
-        this.role = role;
-    }
-
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -121,13 +104,5 @@ public class KlientEntity {
 
     public void setHaslo(String haslo) {
         this.haslo = haslo;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }
