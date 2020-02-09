@@ -3,9 +3,7 @@ package pl.podlaski.api.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.podlaski.api.DAO.Entity.KlientEntity;
-import pl.podlaski.api.DAO.Entity.VideoCassette;
 import pl.podlaski.api.Service.KlientManager;
-import pl.podlaski.api.Service.VideoCassetteManager;
 
 import java.util.Optional;
 

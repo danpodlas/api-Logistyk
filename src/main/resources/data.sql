@@ -133,20 +133,20 @@ VALUES (1,'PALIWO',367.68,'2019-12-12','Paliwo tankowane w Bytomiu',null, 1 ),
 drop table if exists Zlecenie cascade;
 create TABLE Zlecenie
 (
-    id                     INT IDENTITY PRIMARY KEY,
-    zlec_firmyEntity_id    int,
-    zlec_klientEntity_id   int,
-    adreszal               VARCHAR,
-    adresroz               VARCHAR,
-    przyjm_firmyEntity_id  int,
+    id                       INT IDENTITY PRIMARY KEY,
+    zlec_firmyEntity_id      int,
+    zlec_klientEntity_id     int,
+    adreszal                 VARCHAR,
+    adresroz                 VARCHAR,
+    przyjm_firmyEntity_id    int,
     przyjm_kierowcaEntity_id int,
-    oskontakt              VARCHAR,
-    ilosckm                int,
-    stawka                 double,
-    wartzlec               double,
-    typladunku             varchar,
-    specjalny              varchar,
-    waga                   int;
+    oskontakt                VARCHAR,
+    ilosckm                  int,
+    stawka                   double,
+    wartzlec                 double,
+    typladunku               varchar,
+    specjalny                varchar,
+    waga                     int
 );
 
 insert into Zlecenie(zlec_firmyEntity_id, zlec_klientEntity_id, adreszal, adresroz, przyjm_firmyEntity_id, przyjm_kierowcaEntity_id, oskontakt, ilosckm, stawka, wartzlec, typladunku, specjalny, waga)

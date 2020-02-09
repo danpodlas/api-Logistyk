@@ -18,17 +18,19 @@ public class FirmyEntity {
     private String haslo;
     private String numerkonta;
 
-    @OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name="role_id")
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "role_id")
     private RoleEntity roleFirmy;
 
-    @OneToOne(mappedBy="kosztyFirmy",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToOne(mappedBy = "kosztyFirmy", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private KosztyEntity kosztyEntity;
 
-    @OneToOne(mappedBy="zleceniFirmy",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne
+    @JoinColumn(name = "zlec_firmyEntity_id")
     private ZlecenieEntity zlecZlec;
 
-    @OneToOne(mappedBy="przyjmFirmy",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne
+    @JoinColumn(name = "przyjm_firmyEntity_id")
     private ZlecenieEntity przyjmZlec;
 
     public FirmyEntity() {
@@ -45,6 +47,7 @@ public class FirmyEntity {
 //        this.numerkonta = numerkonta;
 //        this.role = role;
 //    }
+
 
     public int getId() {
         return id;
@@ -116,5 +119,37 @@ public class FirmyEntity {
 
     public void setNumerkonta(String numerkonta) {
         this.numerkonta = numerkonta;
+    }
+
+    public RoleEntity getRoleFirmy() {
+        return roleFirmy;
+    }
+
+    public void setRoleFirmy(RoleEntity roleFirmy) {
+        this.roleFirmy = roleFirmy;
+    }
+
+    public KosztyEntity getKosztyEntity() {
+        return kosztyEntity;
+    }
+
+    public void setKosztyEntity(KosztyEntity kosztyEntity) {
+        this.kosztyEntity = kosztyEntity;
+    }
+
+    public ZlecenieEntity getZlecZlec() {
+        return zlecZlec;
+    }
+
+    public void setZlecZlec(ZlecenieEntity zlecZlec) {
+        this.zlecZlec = zlecZlec;
+    }
+
+    public ZlecenieEntity getPrzyjmZlec() {
+        return przyjmZlec;
+    }
+
+    public void setPrzyjmZlec(ZlecenieEntity przyjmZlec) {
+        this.przyjmZlec = przyjmZlec;
     }
 }
