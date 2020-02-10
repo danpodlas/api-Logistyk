@@ -1,10 +1,11 @@
 package pl.podlaski.api.DAO.Entity;
 
+import lombok.Data;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Klient")
-public class KlientEntity {
+public class Klient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +20,13 @@ public class KlientEntity {
     private String email;
     private String haslo;
 
-    @OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name="role_id")
-    private RoleEntity roleKlient;
+    @OneToOne()
+    @JoinColumn(name="role_id", referencedColumnName = "id")
+    private Role role;
 
-    @OneToOne(mappedBy="zlecenieKlient",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private ZlecenieEntity zlecenieEntity;
+//    @OneToOne(mappedBy="zlecenieKlient",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//    private Zlecenie zlecenie;
+
 
     public int getId() {
         return id;
@@ -104,5 +106,13 @@ public class KlientEntity {
 
     public void setHaslo(String haslo) {
         this.haslo = haslo;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

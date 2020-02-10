@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Samochod")
-public class SamochodEntity {
+public class Samochod {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,22 +16,9 @@ public class SamochodEntity {
     private int przebieg;
     private String numerrejestracyjny;
     private String typpojazdu;
-    private Przyczepy przyczepy;
+    private String przyczepy;
 
-    @OneToOne(mappedBy="samochodKoszty",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private KosztyEntity kosztyEntity;
-
-    public SamochodEntity() {
-    }
-
-    public SamochodEntity(String marka, String model, String rokprodukcji, int przebieg, String numerrejestracyjny, String typpojazdu, Przyczepy przyczepy) {
-        this.marka = marka;
-        this.model = model;
-        this.rokprodukcji = rokprodukcji;
-        this.przebieg = przebieg;
-        this.numerrejestracyjny = numerrejestracyjny;
-        this.typpojazdu = typpojazdu;
-        this.przyczepy = przyczepy;
+    public Samochod() {
     }
 
     public int getId() {
@@ -90,11 +77,12 @@ public class SamochodEntity {
         this.typpojazdu = typpojazdu;
     }
 
-    public Przyczepy getPrzyczepy() {
+    public String getPrzyczepy() {
         return przyczepy;
     }
 
-    public void setPrzyczepy(Przyczepy przyczepy) {
+    public void setPrzyczepy(String przyczepy) {
         this.przyczepy = przyczepy;
     }
+
 }

@@ -6,14 +6,14 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Koszty")
-public class KosztyEntity {
+public class Koszty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne
     @JoinColumn(name = "samochod_id", referencedColumnName = "id")
-    private SamochodEntity samochodKoszty;
+    private Samochod samochodKoszty;
 
     private RodzajeKosztow radzajekosztow;
     private Double kwota;
@@ -21,27 +21,15 @@ public class KosztyEntity {
     private String notka;
 
     @OneToOne
-    @JoinColumn(name = "firmy_id", referencedColumnName = "id")
-    private FirmyEntity kosztyFirmy;
+    @JoinColumn(name = "firma_id", referencedColumnName = "id")
+    private Firma kosztyFirmy;
 
     @OneToOne
     @JoinColumn(name = "kierowca_id", referencedColumnName = "id")
-    private KierowcaEntity kosztyKierowca;
+    private Kierowca kosztyKierowca;
 
-    public KosztyEntity() {
+    public Koszty() {
     }
-
-//    public KosztyEntity(Long id, SamochodEntity samochodEntity, RodzajeKosztow rodzajeKosztow, Double kwota, String data, String notka, FirmyEntity przyjmfirmyEntity, KierowcaEntity kierowcaEntity) {
-//        this.id = id;
-//        this.samochodEntity = samochodEntity;
-//        this.rodzajeKosztow = rodzajeKosztow;
-//        this.kwota = kwota;
-//        this.data = data;
-//        this.notka = notka;
-//        this.przyjmfirmyEntity = przyjmfirmyEntity;
-//        this.kierowcaEntity = kierowcaEntity;
-//    }
-
 
     public int getId() {
         return id;
@@ -51,11 +39,11 @@ public class KosztyEntity {
         this.id = id;
     }
 
-    public SamochodEntity getSamochodKoszty() {
+    public Samochod getSamochodKoszty() {
         return samochodKoszty;
     }
 
-    public void setSamochodKoszty(SamochodEntity samochodKoszty) {
+    public void setSamochodKoszty(Samochod samochodKoszty) {
         this.samochodKoszty = samochodKoszty;
     }
 
@@ -91,19 +79,19 @@ public class KosztyEntity {
         this.notka = notka;
     }
 
-    public FirmyEntity getKosztyFirmy() {
+    public Firma getKosztyFirmy() {
         return kosztyFirmy;
     }
 
-    public void setKosztyFirmy(FirmyEntity kosztyFirmy) {
+    public void setKosztyFirmy(Firma kosztyFirmy) {
         this.kosztyFirmy = kosztyFirmy;
     }
 
-    public KierowcaEntity getKosztyKierowca() {
+    public Kierowca getKosztyKierowca() {
         return kosztyKierowca;
     }
 
-    public void setKosztyKierowca(KierowcaEntity kosztyKierowca) {
+    public void setKosztyKierowca(Kierowca kosztyKierowca) {
         this.kosztyKierowca = kosztyKierowca;
     }
 }

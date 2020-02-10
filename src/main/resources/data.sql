@@ -3,7 +3,7 @@ drop table if exists ROLE cascade;
 create table ROLE
 (
     id   INT IDENTITY PRIMARY KEY,
-    name ENUM ('KIEROWCA','KLIENT','FIRMA','ADMIN')
+    name VARCHAR
 );
 
 insert into ROLE(name)
@@ -23,7 +23,7 @@ create TABLE Samochod
     przebieg           int,
     numerrejestracyjny VARCHAR,
     typpojazdu         VARCHAR,
-    przyczepy          ENUM ( 'WYWROTKA', 'FIRANKA', 'CHŁODNIA', 'CYSTERNA', 'PRZYCZEPA')
+    przyczepy         VARCHAR
 );
 
 insert into Samochod(marka, model, rokprodukcji, przebieg, numerrejestracyjny, typpojazdu, przyczepy)

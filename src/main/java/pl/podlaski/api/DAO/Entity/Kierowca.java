@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Kierowca")
-public class KierowcaEntity {
+public class Kierowca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,31 +24,16 @@ public class KierowcaEntity {
 
     @OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name="role_id")
-    private RoleEntity roleKierowca;
+    private Role roleKierowca;
 
-    @OneToOne(mappedBy="kosztyKierowca",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private KosztyEntity kosztyEntity;
+//    @OneToOne(mappedBy="kosztyKierowca",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//    private Koszty koszty;
+//
+//    @OneToOne(mappedBy="przyjmKierowca",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//    private Zlecenie zlecenie;
 
-    @OneToOne(mappedBy="przyjmKierowca",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private ZlecenieEntity zlecenieEntity;
-
-    public KierowcaEntity() {
+    public Kierowca() {
     }
-
-//    public KierowcaEntity(Long id, String imie, String nazwisko, String peselnip, String telefon, String miasto, String ulica, String nrdomu, String datazatrudnienia, String email, String haslo, String numerkonta, RoleName role, SamochodEntity samochodEntity) {
-//        this.id = id;
-//        this.imie = imie;
-//        this.nazwisko = nazwisko;
-//        this.peselnip = peselnip;
-//        this.telefon = telefon;
-//        this.miasto = miasto;
-//        this.ulica = ulica;
-//        this.nrdomu = nrdomu;
-//        this.datazatrudnienia = datazatrudnienia;
-//        this.email = email;
-//        this.haslo = haslo;
-//        this.numerkonta = numerkonta;
-//    }
 
     public Long getId() {
         return id;
@@ -146,11 +131,11 @@ public class KierowcaEntity {
         this.numerkonta = numerkonta;
     }
 
-    public RoleEntity getRoleKierowca() {
+    public Role getRoleKierowca() {
         return roleKierowca;
     }
 
-    public void setRoleKierowca(RoleEntity roleKierowca) {
+    public void setRoleKierowca(Role roleKierowca) {
         this.roleKierowca = roleKierowca;
     }
 }

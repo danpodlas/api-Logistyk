@@ -1,33 +1,42 @@
 package pl.podlaski.api.DAO.Entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
+@Data
 @Entity
 @Table(name = "Zlecenie")
-public class ZlecenieEntity {
+public class Zlecenie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(mappedBy = "zlecZlec")
-    private Set<FirmyEntity> zleceniFirmyList = new HashSet<>();
+    //    @OneToMany(mappedBy = "zlecZlec")
+//    private Set<Firma> zleceniFirmyList = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "zlec_firmyEntity_id", referencedColumnName = "id")
+    private Firma zlecFirma;
 
     @OneToOne
     @JoinColumn(name = "zlec_klientEntity_id", referencedColumnName = "id")
-    private KlientEntity zlecenieKlient;
+    private Klient zlecenieKlient;
 
     private String adreszal;
     private String adresroz;
 
-    @OneToMany(mappedBy = "przyjmZlec")
-    private Set<FirmyEntity> przyjmFirmyList = new HashSet<>();
+    //    @OneToMany(mappedBy = "przyjmZlec")
+//    private Set<Firma> przyjmFirmyList = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "przyjm_firmyEntity_id", referencedColumnName = "id")
+    private Firma przyjmFirma;
 
     @OneToOne
     @JoinColumn(name = "przyjm_kierowcaEntity_id", referencedColumnName = "id")
-    private KierowcaEntity przyjmKierowca;
+    private Kierowca przyjmKierowca;
 
     private String oskontakt;
     private int ilosckm;
@@ -37,7 +46,7 @@ public class ZlecenieEntity {
     private String specjalny;
     private int waga;
 
-    public ZlecenieEntity() {
+    public Zlecenie() {
     }
 
     public int getId() {
@@ -48,19 +57,19 @@ public class ZlecenieEntity {
         this.id = id;
     }
 
-    public Set<FirmyEntity> getZleceniFirmyList() {
-        return zleceniFirmyList;
+    public Firma getZlecFirma() {
+        return zlecFirma;
     }
 
-    public void setZleceniFirmyList(Set<FirmyEntity> zleceniFirmyList) {
-        this.zleceniFirmyList = zleceniFirmyList;
+    public void setZlecFirma(Firma zlecFirma) {
+        this.zlecFirma = zlecFirma;
     }
 
-    public KlientEntity getZlecenieKlient() {
+    public Klient getZlecenieKlient() {
         return zlecenieKlient;
     }
 
-    public void setZlecenieKlient(KlientEntity zlecenieKlient) {
+    public void setZlecenieKlient(Klient zlecenieKlient) {
         this.zlecenieKlient = zlecenieKlient;
     }
 
@@ -80,19 +89,19 @@ public class ZlecenieEntity {
         this.adresroz = adresroz;
     }
 
-    public Set<FirmyEntity> getPrzyjmFirmyList() {
-        return przyjmFirmyList;
+    public Firma getPrzyjmFirma() {
+        return przyjmFirma;
     }
 
-    public void setPrzyjmFirmyList(Set<FirmyEntity> przyjmFirmyList) {
-        this.przyjmFirmyList = przyjmFirmyList;
+    public void setPrzyjmFirma(Firma przyjmFirma) {
+        this.przyjmFirma = przyjmFirma;
     }
 
-    public KierowcaEntity getPrzyjmKierowca() {
+    public Kierowca getPrzyjmKierowca() {
         return przyjmKierowca;
     }
 
-    public void setPrzyjmKierowca(KierowcaEntity przyjmKierowca) {
+    public void setPrzyjmKierowca(Kierowca przyjmKierowca) {
         this.przyjmKierowca = przyjmKierowca;
     }
 
@@ -151,4 +160,5 @@ public class ZlecenieEntity {
     public void setWaga(int waga) {
         this.waga = waga;
     }
+
 }

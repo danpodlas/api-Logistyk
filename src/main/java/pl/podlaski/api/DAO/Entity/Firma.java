@@ -1,13 +1,15 @@
 package pl.podlaski.api.DAO.Entity;
 
 import javax.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
-@Table(name = "Firma")
-public class FirmyEntity {
+@Table(name = "firma")
+public class Firma {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String nip;
     private String telefonkontaktowy;
@@ -20,40 +22,16 @@ public class FirmyEntity {
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "role_id")
-    private RoleEntity roleFirmy;
+    private Role roleFirmy;
 
-    @OneToOne(mappedBy = "kosztyFirmy", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private KosztyEntity kosztyEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "zlec_firmyEntity_id")
-    private ZlecenieEntity zlecZlec;
-
-    @ManyToOne
-    @JoinColumn(name = "przyjm_firmyEntity_id")
-    private ZlecenieEntity przyjmZlec;
-
-    public FirmyEntity() {
+    public Firma() {
     }
 
-//    public FirmyEntity(String nip, String telefonkontaktowy, String miasto, String ulica, String nrdomu, String email, String haslo, String numerkonta, RoleName role, ZlecenieEntity zlecenieEntity) {
-//        this.nip = nip;
-//        this.telefonkontaktowy = telefonkontaktowy;
-//        this.miasto = miasto;
-//        this.ulica = ulica;
-//        this.nrdomu = nrdomu;
-//        this.email = email;
-//        this.haslo = haslo;
-//        this.numerkonta = numerkonta;
-//        this.role = role;
-//    }
-
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -121,35 +99,11 @@ public class FirmyEntity {
         this.numerkonta = numerkonta;
     }
 
-    public RoleEntity getRoleFirmy() {
+    public Role getRoleFirmy() {
         return roleFirmy;
     }
 
-    public void setRoleFirmy(RoleEntity roleFirmy) {
+    public void setRoleFirmy(Role roleFirmy) {
         this.roleFirmy = roleFirmy;
-    }
-
-    public KosztyEntity getKosztyEntity() {
-        return kosztyEntity;
-    }
-
-    public void setKosztyEntity(KosztyEntity kosztyEntity) {
-        this.kosztyEntity = kosztyEntity;
-    }
-
-    public ZlecenieEntity getZlecZlec() {
-        return zlecZlec;
-    }
-
-    public void setZlecZlec(ZlecenieEntity zlecZlec) {
-        this.zlecZlec = zlecZlec;
-    }
-
-    public ZlecenieEntity getPrzyjmZlec() {
-        return przyjmZlec;
-    }
-
-    public void setPrzyjmZlec(ZlecenieEntity przyjmZlec) {
-        this.przyjmZlec = przyjmZlec;
     }
 }
