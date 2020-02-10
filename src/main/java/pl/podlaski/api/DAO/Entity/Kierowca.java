@@ -35,6 +35,7 @@ public class Kierowca {
     public Kierowca() {
     }
 
+
     public Long getId() {
         return id;
     }
@@ -137,5 +138,24 @@ public class Kierowca {
 
     public void setRoleKierowca(Role roleKierowca) {
         this.roleKierowca = roleKierowca;
+    }
+
+    @Override
+    public String toString() {
+        return "Kierowca{" +
+                "id=" + id +
+                ", imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", peselnip='" + peselnip + '\'' +
+                ", telefon='" + telefon + '\'' +
+                ", miasto='" + miasto + '\'' +
+                ", ulica='" + ulica + '\'' +
+                ", nrdomu='" + nrdomu + '\'' +
+                ", datazatrudnienia='" + datazatrudnienia + '\'' +
+                ", email='" + email + '\'' +
+                ", haslo='" + haslo + '\'' +
+                ", numerkonta='" + numerkonta + '\'' +
+                ", roleKierowca=" + roleKierowca +
+                '}';
     }
 }

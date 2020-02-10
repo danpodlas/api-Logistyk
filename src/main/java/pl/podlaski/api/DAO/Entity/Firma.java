@@ -9,8 +9,9 @@ import lombok.Data;
 public class Firma {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
+    private String nazwafirmy;
     private String nip;
     private String telefonkontaktowy;
     private String miasto;
@@ -27,12 +28,20 @@ public class Firma {
     public Firma() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNazwafirmy() {
+        return nazwafirmy;
+    }
+
+    public void setNazwafirmy(String nazwafirmy) {
+        this.nazwafirmy = nazwafirmy;
     }
 
     public String getNip() {

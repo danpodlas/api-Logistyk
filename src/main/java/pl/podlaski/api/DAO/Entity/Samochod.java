@@ -9,7 +9,7 @@ public class Samochod {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String marka;
     private String model;
     private String rokprodukcji;
@@ -21,11 +21,11 @@ public class Samochod {
     public Samochod() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -84,5 +84,4 @@ public class Samochod {
     public void setPrzyczepy(String przyczepy) {
         this.przyczepy = przyczepy;
     }
-
 }

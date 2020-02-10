@@ -12,7 +12,7 @@ public class Zlecenie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     //    @OneToMany(mappedBy = "zlecZlec")
 //    private Set<Firma> zleceniFirmyList = new HashSet<>();
@@ -49,11 +49,11 @@ public class Zlecenie {
     public Zlecenie() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -5,7 +5,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.podlaski.api.DAO.Entity.Firma;
+import pl.podlaski.api.DAO.Entity.Kierowca;
 import pl.podlaski.api.DAO.Entity.Klient;
+import pl.podlaski.api.Repo.FirmyRepo;
 import pl.podlaski.api.Repo.KlientRepo;
 
 import java.util.List;
@@ -21,19 +24,23 @@ public class KlientService {
         this.klientRepo = klientRepo;
     }
 
-    public Optional<Klient> findById(Long id){
-        return klientRepo.findById(id);
-    }
-
-    public Iterable<Klient> findAll(){
+    public List<Klient> findAll() {
         return klientRepo.findAll();
     }
 
-    public Klient save(Klient klient){
+    public Klient findOne(long id) {
+        return klientRepo.getOne(id);
+    }
+
+    public Klient save(Klient klient) {
         return klientRepo.save(klient);
     }
 
-    public void delete(Long id){
+    public Klient update(Klient klient) {
+        return klientRepo.saveAndFlush(klient);
+    }
+
+    public void delete(long id) {
         klientRepo.deleteById(id);
     }
 

@@ -1,12 +1,12 @@
 package pl.podlaski.api.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.podlaski.api.DAO.Entity.Firma;
+import pl.podlaski.api.DAO.Entity.Kierowca;
 import pl.podlaski.api.Repo.FirmyRepo;
-import java.util.Optional;
+
+import java.util.List;
 
 @Service
 public class FirmyService {
@@ -17,24 +17,23 @@ public class FirmyService {
         this.firmyRepo = firmyRepo;
     }
 
-    public Optional<Firma> findById(Long id){
-        return firmyRepo.findById(id);
+    public List<Firma> findAll(){
+        return firmyRepo.findAll();
     }
 
-    public Iterable<Firma> findAll(){
-        return firmyRepo.findAll();
+    public Firma findOne(long id) {
+        return firmyRepo.getOne(id);
     }
 
     public Firma save(Firma firma){
         return firmyRepo.save(firma);
     }
 
-    public void delete(long id){
-        firmyRepo.deleteById(id);
+    public Firma update(Firma firma){
+        return firmyRepo.saveAndFlush(firma);
     }
 
-    //Ta metoda jest wywoływana w momencie startu aplikacji i wrzuca elementy do bazy
-    @EventListener(ApplicationReadyEvent.class)
-    public void fillDB(){
+    public void delete(long id){
+        firmyRepo.deleteById(id);
     }
 }

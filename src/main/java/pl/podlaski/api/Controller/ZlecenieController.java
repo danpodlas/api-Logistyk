@@ -2,16 +2,17 @@ package pl.podlaski.api.Controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.podlaski.api.DAO.Entity.Zlecenie;
 import pl.podlaski.api.Service.ZlecenieService;
 
-import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/zlecenie")
 public class ZlecenieController {
-
+    //TODO update
     private ZlecenieService zlecenieService;
 
     @Autowired
@@ -19,28 +20,28 @@ public class ZlecenieController {
         this.zlecenieService = zlecenieService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public Iterable<Zlecenie> getAll(){
         return  zlecenieService.findAll();
     }
 
-    @GetMapping
-    public Optional<Zlecenie> getById(@RequestParam Long index){
-        return zlecenieService.findById(index);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Zlecenie> get(@PathVariable Long id) {
+        return new ResponseEntity(this.zlecenieService.findOne(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public Zlecenie addVideo(@RequestBody Zlecenie zlecenie){
+    public Zlecenie addZlecenie (@RequestBody Zlecenie zlecenie){
         return  zlecenieService.save(zlecenie);
     }
 
     @PutMapping
-    public Zlecenie updateVideo(@RequestBody Zlecenie zlecenie){
+    public Zlecenie updateZlecenie(@RequestBody Zlecenie zlecenie){
         return  zlecenieService.save(zlecenie);
     }
 
     @DeleteMapping
-    public void deleteVideo(@RequestParam Long index){
+    public void deleteZlecenie(@RequestParam Long index){
         zlecenieService.delete(index);
     }
 }

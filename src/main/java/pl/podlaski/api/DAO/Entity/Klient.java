@@ -9,7 +9,7 @@ public class Klient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String imie;
     private String nazwisko;
     private String pesel;
@@ -28,11 +28,11 @@ public class Klient {
 //    private Zlecenie zlecenie;
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
