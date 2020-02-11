@@ -6,10 +6,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.podlaski.api.DAO.Entity.Firma;
-import pl.podlaski.api.DAO.Entity.Kierowca;
 import pl.podlaski.api.DAO.Entity.Klient;
 import pl.podlaski.api.DAO.Entity.Role;
+import pl.podlaski.api.LogowanieForma;
 import pl.podlaski.api.Service.KlientService;
 import pl.podlaski.api.Service.RoleService;
 
@@ -48,7 +47,20 @@ public class KlientController {
         return ResponseEntity.status(HttpStatus.OK).body(klient);
     }
 
-    @PostMapping
+    @PostMapping("/logowanie")
+    public ResponseEntity<Klient> logowanieKlient(@RequestBody LogowanieForma logowanieForma) {
+        Klient klient = null;
+        try {
+            klient = klientService.logIn(logowanieForma.getEmail(), logowanieForma.getHaslo());
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+            log.info("Brak użytkownika o mailu " + logowanieForma.getEmail() + "Lub hasło nieprawidłowe");
+            ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(klient);
+    }
+
+    @PostMapping(value = "/Register")
     public ResponseEntity<Klient> addKlient(@RequestBody Klient klient) {
         Role role = roleService.findByName("KLIENT");
         klient.setRole(role);

@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.podlaski.api.DAO.Entity.Kierowca;
+import pl.podlaski.api.DAO.Entity.Klient;
 import pl.podlaski.api.DAO.Entity.Role;
+import pl.podlaski.api.LogowanieForma;
 import pl.podlaski.api.Service.KierowcyService;
 import pl.podlaski.api.Service.RoleService;
 
@@ -47,7 +49,20 @@ public class KierowcyController {
         return ResponseEntity.status(HttpStatus.OK).body(kierowca);
     }
 
-    @PostMapping
+    @PostMapping("/logowanie")
+    public ResponseEntity<Kierowca> logowanieKierowca(@RequestBody LogowanieForma logowanieForma) {
+        Kierowca kierowca = null;
+        try {
+            kierowca = kierowcyService.logIn(logowanieForma.getEmail(), logowanieForma.getHaslo());
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+            log.info("Brak użytkownika o mailu " + logowanieForma.getEmail() + "Lub hasło nieprawidłowe");
+            ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(kierowca);
+    }
+
+    @PostMapping(value = "/Register")
     public ResponseEntity<Kierowca> addKierowca(@RequestBody Kierowca kierowca) {
         Role role = roleService.findByName("KIEROWCA");
         kierowca.setRoleKierowca(role);

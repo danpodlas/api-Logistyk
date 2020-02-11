@@ -1,6 +1,5 @@
 package pl.podlaski.api.DAO.Entity;
 
-import pl.podlaski.api.DAO.Constans.Przyczepy;
 import javax.persistence.*;
 
 @Entity
@@ -83,5 +82,19 @@ public class Samochod {
 
     public void setPrzyczepy(String przyczepy) {
         this.przyczepy = przyczepy;
+    }
+
+    @Override
+    public String toString() {
+        return "Samochod{" +
+                "id=" + id +
+                ", marka='" + marka + '\'' +
+                ", model='" + model + '\'' +
+                ", rokprodukcji='" + rokprodukcji + '\'' +
+                ", przebieg=" + przebieg +
+                ", numerrejestracyjny='" + numerrejestracyjny + '\'' +
+                ", typpojazdu='" + typpojazdu + '\'' +
+                ", przyczepy='" + przyczepy + '\'' +
+                '}';
     }
 }

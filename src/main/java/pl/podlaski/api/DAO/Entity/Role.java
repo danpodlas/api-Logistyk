@@ -11,16 +11,6 @@ public class Role {
 
     private String name;
 
-//    @OneToOne(mappedBy="roleKlient",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    private Klient klient;
-//
-//    @OneToOne(mappedBy="roleKierowca",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    private Kierowca kierowca;
-//
-//    @OneToOne(mappedBy="roleFirmy",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    private Firma firma;
-
-
     public Long getId() {
         return id;
     }
@@ -35,5 +25,13 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

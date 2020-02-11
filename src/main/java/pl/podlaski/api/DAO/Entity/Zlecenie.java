@@ -1,10 +1,13 @@
 package pl.podlaski.api.DAO.Entity;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.text.ParseException;
+import java.util.Date;
+
+@Slf4j
 @Data
 @Entity
 @Table(name = "Zlecenie")
@@ -14,8 +17,6 @@ public class Zlecenie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    @OneToMany(mappedBy = "zlecZlec")
-//    private Set<Firma> zleceniFirmyList = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "zlec_firmyEntity_id", referencedColumnName = "id")
     private Firma zlecFirma;
@@ -26,9 +27,6 @@ public class Zlecenie {
 
     private String adreszal;
     private String adresroz;
-
-    //    @OneToMany(mappedBy = "przyjmZlec")
-//    private Set<Firma> przyjmFirmyList = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "przyjm_firmyEntity_id", referencedColumnName = "id")
@@ -45,6 +43,15 @@ public class Zlecenie {
     private String typladunku;
     private String specjalny;
     private int waga;
+
+    @Temporal(TemporalType.DATE)
+    private Date datautworzenia;
+
+    @Temporal(TemporalType.DATE)
+    private Date dataprzyjecia;
+
+    @Temporal(TemporalType.DATE)
+    private Date datazakonczenia;
 
     public Zlecenie() {
     }
@@ -161,4 +168,51 @@ public class Zlecenie {
         this.waga = waga;
     }
 
+    public Date getDatautworzenia() {
+        return datautworzenia;
+    }
+
+    public void setDatautworzenia(Date datautworzenia) throws ParseException {
+        this.datautworzenia = datautworzenia;
+    }
+
+    public Date getDataprzyjecia() {
+        return dataprzyjecia;
+    }
+
+    public void setDataprzyjecia(Date dataprzyjecia) {
+        this.dataprzyjecia = dataprzyjecia;
+    }
+
+    public Date getDatazakonczenia() {
+        return datazakonczenia;
+    }
+
+    public void setDatazakonczenia(Date datazakonczenia) {
+        this.datazakonczenia = datazakonczenia;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Zlecenie{" +
+                "id=" + id +
+                ", zlecFirma=" + zlecFirma +
+                ", zlecenieKlient=" + zlecenieKlient +
+                ", adreszal='" + adreszal + '\'' +
+                ", adresroz='" + adresroz + '\'' +
+                ", przyjmFirma=" + przyjmFirma +
+                ", przyjmKierowca=" + przyjmKierowca +
+                ", oskontakt='" + oskontakt + '\'' +
+                ", ilosckm=" + ilosckm +
+                ", stawka=" + stawka +
+                ", wartzlec=" + wartzlec +
+                ", typladunku='" + typladunku + '\'' +
+                ", specjalny='" + specjalny + '\'' +
+                ", waga=" + waga +
+                ", datautworzenia=" + datautworzenia +
+                ", dataprzyjecia=" + dataprzyjecia +
+                ", datazakonczenia=" + datazakonczenia +
+                '}';
+    }
 }

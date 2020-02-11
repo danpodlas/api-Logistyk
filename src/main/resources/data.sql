@@ -146,11 +146,14 @@ create TABLE Zlecenie
     wartzlec                 double,
     typladunku               varchar,
     specjalny                varchar,
-    waga                     int
+    waga                     int,
+    datautworzenia           date,
+    dataprzyjecia            date,
+    datazakonczenia          date
 );
 
-insert into Zlecenie(zlec_firmyEntity_id, zlec_klientEntity_id, adreszal, adresroz, przyjm_firmyEntity_id, przyjm_kierowcaEntity_id, oskontakt, ilosckm, stawka, wartzlec, typladunku, specjalny, waga)
-VALUES ( null,1, 'Warszawa ul. Marywislka 44','Kraków, ul. Wioseena 12',null, 1,'Mirek tel. 500500500',350,3.0, 1050,'Palety',null,7000),
-       ( 1, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',null, 1,'Mirek tel. 500500500',350,2.8, 980,'Ubrania',null,9000),
-       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',null, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000),
-       ( null,1, 'Lublin, ul. Kwiecista 42', 'Warszawa ul. Marywislka 44',null,2, 'Adam tel. 500500501',200,3.0, 600,'Węgiel',null,17000);
+insert into Zlecenie(zlec_firmyEntity_id, zlec_klientEntity_id, adreszal, adresroz, przyjm_firmyEntity_id, przyjm_kierowcaEntity_id, oskontakt, ilosckm, stawka, wartzlec, typladunku, specjalny, waga,datautworzenia,dataprzyjecia,datazakonczenia)
+VALUES ( null,1, 'Warszawa ul. Marywislka 44','Kraków, ul. Wioseena 12',null, 1,'Mirek tel. 500500500',350,3.0, 1050,'Palety',null,7000, '2020-01-03', '2020-01-03','2020-01-04'),
+       ( 1, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',null, 1,'Mirek tel. 500500500',350,2.8, 980,'Ubrania',null,9000, '2020-01-04', '2020-01-05',null),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',null, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000, '2020-01-07', '2020-01-08', '2020-01-10'),
+       ( null,1, 'Lublin, ul. Kwiecista 42', 'Warszawa ul. Marywislka 44',null,2, 'Adam tel. 500500501',200,3.0, 600,'Węgiel',null,17000, '2020-01-09',null, null);

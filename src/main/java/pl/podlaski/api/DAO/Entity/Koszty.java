@@ -3,6 +3,7 @@ package pl.podlaski.api.DAO.Entity;
 import pl.podlaski.api.DAO.Constans.RodzajeKosztow;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Koszty")
@@ -17,7 +18,10 @@ public class Koszty {
 
     private RodzajeKosztow radzajekosztow;
     private Double kwota;
-    private String data;
+
+    @Temporal(TemporalType.DATE)
+    private Date data;
+
     private String notka;
 
     @OneToOne
@@ -63,11 +67,11 @@ public class Koszty {
         this.kwota = kwota;
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
@@ -93,5 +97,19 @@ public class Koszty {
 
     public void setKosztyKierowca(Kierowca kosztyKierowca) {
         this.kosztyKierowca = kosztyKierowca;
+    }
+
+    @Override
+    public String toString() {
+        return "Koszty{" +
+                "id=" + id +
+                ", samochodKoszty=" + samochodKoszty +
+                ", radzajekosztow=" + radzajekosztow +
+                ", kwota=" + kwota +
+                ", data='" + data + '\'' +
+                ", notka='" + notka + '\'' +
+                ", kosztyFirmy=" + kosztyFirmy +
+                ", kosztyKierowca=" + kosztyKierowca +
+                '}';
     }
 }

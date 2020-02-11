@@ -115,4 +115,21 @@ public class Firma {
     public void setRoleFirmy(Role roleFirmy) {
         this.roleFirmy = roleFirmy;
     }
+
+    @Override
+    public String toString() {
+        return "Firma{" +
+                "id=" + id +
+                ", nazwafirmy='" + nazwafirmy + '\'' +
+                ", nip='" + nip + '\'' +
+                ", telefonkontaktowy='" + telefonkontaktowy + '\'' +
+                ", miasto='" + miasto + '\'' +
+                ", ulica='" + ulica + '\'' +
+                ", nrdomu='" + nrdomu + '\'' +
+                ", email='" + email + '\'' +
+                ", haslo='" + haslo + '\'' +
+                ", numerkonta='" + numerkonta + '\'' +
+                ", roleFirmy=" + roleFirmy +
+                '}';
+    }
 }

@@ -10,6 +10,7 @@ import pl.podlaski.api.DAO.Entity.Firma;
 import pl.podlaski.api.DAO.Entity.Klient;
 import pl.podlaski.api.DAO.Entity.Role;
 import pl.podlaski.api.DAO.Entity.Zlecenie;
+import pl.podlaski.api.LogowanieForma;
 import pl.podlaski.api.Service.FirmyService;
 import pl.podlaski.api.Service.RoleService;
 
@@ -48,7 +49,21 @@ public class FirmyController {
         return ResponseEntity.status(HttpStatus.OK).body(firma);
     }
 
-    @PostMapping
+    @PostMapping("/logowanie")
+    public ResponseEntity<Firma> logowanieFirma(@RequestBody LogowanieForma logowanieForma) {
+        Firma firma = null;
+        try {
+            firma = firmyService.logIn(logowanieForma.getEmail(), logowanieForma.getHaslo());
+            if(firma==null){return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+            log.info("Brak użytkownika o mailu " + logowanieForma.getEmail() + "Lub hasło nieprawidłowe");
+            ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(firma);
+    }
+
+    @PostMapping(value = "/Register")
     public ResponseEntity<Firma> addFirma(@RequestBody Firma firma) {
         Role role = roleService.findByName("FIRMA");
         firma.setRoleFirmy(role);

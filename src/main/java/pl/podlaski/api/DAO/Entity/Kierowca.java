@@ -1,6 +1,7 @@
 package pl.podlaski.api.DAO.Entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Kierowca")
@@ -17,7 +18,10 @@ public class Kierowca {
     private String miasto;
     private String ulica;
     private String nrdomu;
-    private String datazatrudnienia;
+
+    @Temporal(TemporalType.DATE)
+    private Date datazatrudnienia;
+
     private String email;
     private String haslo;
     private String numerkonta;
@@ -25,12 +29,6 @@ public class Kierowca {
     @OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name="role_id")
     private Role roleKierowca;
-
-//    @OneToOne(mappedBy="kosztyKierowca",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    private Koszty koszty;
-//
-//    @OneToOne(mappedBy="przyjmKierowca",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    private Zlecenie zlecenie;
 
     public Kierowca() {
     }
@@ -100,11 +98,11 @@ public class Kierowca {
         this.nrdomu = nrdomu;
     }
 
-    public String getDatazatrudnienia() {
+    public Date getDatazatrudnienia() {
         return datazatrudnienia;
     }
 
-    public void setDatazatrudnienia(String datazatrudnienia) {
+    public void setDatazatrudnienia(Date datazatrudnienia) {
         this.datazatrudnienia = datazatrudnienia;
     }
 
@@ -151,7 +149,7 @@ public class Kierowca {
                 ", miasto='" + miasto + '\'' +
                 ", ulica='" + ulica + '\'' +
                 ", nrdomu='" + nrdomu + '\'' +
-                ", datazatrudnienia='" + datazatrudnienia + '\'' +
+                ", datazatrudnienia=" + datazatrudnienia +
                 ", email='" + email + '\'' +
                 ", haslo='" + haslo + '\'' +
                 ", numerkonta='" + numerkonta + '\'' +

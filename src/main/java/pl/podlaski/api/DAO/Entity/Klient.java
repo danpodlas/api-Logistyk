@@ -1,6 +1,5 @@
 package pl.podlaski.api.DAO.Entity;
 
-import lombok.Data;
 import javax.persistence.*;
 
 @Entity
@@ -23,10 +22,6 @@ public class Klient {
     @OneToOne()
     @JoinColumn(name="role_id", referencedColumnName = "id")
     private Role role;
-
-//    @OneToOne(mappedBy="zlecenieKlient",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    private Zlecenie zlecenie;
-
 
     public Long getId() {
         return id;
@@ -114,5 +109,22 @@ public class Klient {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "Klient{" +
+                "id=" + id +
+                ", imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", pesel='" + pesel + '\'' +
+                ", telefon='" + telefon + '\'' +
+                ", miasto='" + miasto + '\'' +
+                ", ulica='" + ulica + '\'' +
+                ", nrdomu='" + nrdomu + '\'' +
+                ", email='" + email + '\'' +
+                ", haslo='" + haslo + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

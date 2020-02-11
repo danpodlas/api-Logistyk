@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.*;
 import pl.podlaski.api.DAO.Entity.Samochod;
 import pl.podlaski.api.Service.SamochodyService;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/samochody")
 public class SamochodyController {
-    //TODO update
+
     private SamochodyService samochodyService;
 
     @Autowired
@@ -24,25 +26,58 @@ public class SamochodyController {
     }
 
     @GetMapping("/")
-    public Iterable<Samochod> getAll(){
-        return  samochodyService.findAll();
+    ResponseEntity<List<Samochod>> getAll() {
+        List<Samochod> samochodList = samochodyService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(samochodList);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Samochod> get(@PathVariable Long id) {
-        return new ResponseEntity(this.samochodyService.findOne(id), HttpStatus.OK);
+    public ResponseEntity findSamochod(@PathVariable("id") Long id) {
+        Samochod samochod = null;
+        try {
+            samochod = samochodyService.findOne(id);
+            log.info("Samochod o id '{}' znaleziony", id);
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(samochod);
     }
 
     @PostMapping
-    public Samochod addSamochod(@RequestBody Samochod samochod){
-        log.info("Dodano samochód: Marka:'{}', Model:'{}', Rejestracja'{}'", samochod.getMarka(), samochod.getModel(), samochod.getNumerrejestracyjny());
-        return  samochodyService.save(samochod);
+    public ResponseEntity<Samochod> addSamochod(@RequestBody Samochod samochod) {
+              samochodyService.save(samochod);
+        log.info("Samochod {} dodany", samochod.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(samochod);
     }
 
     @PutMapping(value = "/{id}")
     public Samochod updateSamochod(@RequestBody Samochod samochod){
         log.info("Zaktualizowano samochód: id:'{}', Marka:'{}', Model:'{}', Rejestracja'{}'",samochod.getId(), samochod.getMarka(), samochod.getModel(), samochod.getNumerrejestracyjny());
         return  samochodyService.save(samochod);
+    }
+
+    public Samochod updateSamochod(@PathVariable(value = "id") Long id, @RequestBody Samochod samochod) {
+
+        Samochod samochodtoUpdate = null;
+        try {
+            samochodtoUpdate = samochodyService.findOne(id);
+            samochodtoUpdate.setMarka(samochod.getMarka());
+            samochodtoUpdate.setModel(samochod.getModel());
+            samochodtoUpdate.setRokprodukcji(samochod.getRokprodukcji());
+            samochodtoUpdate.setPrzebieg(samochod.getPrzebieg());
+            samochodtoUpdate.setRokprodukcji(samochod.getRokprodukcji());
+            samochodtoUpdate.setTyppojazdu(samochod.getTyppojazdu());
+            samochodtoUpdate.setPrzyczepy(samochod.getPrzyczepy());
+
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+            ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        samochodyService.update(samochodtoUpdate);
+        log.info("Zaktualizowano dane samochodu :'{}'", samochodtoUpdate.toString());
+        ResponseEntity.status(HttpStatus.OK).body(samochodtoUpdate);
+        return samochodyService.update(samochodtoUpdate);
     }
 
     @DeleteMapping(value = "/{id}")

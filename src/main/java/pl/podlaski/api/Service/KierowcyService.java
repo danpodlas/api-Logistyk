@@ -5,6 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.podlaski.api.DAO.Entity.Kierowca;
+import pl.podlaski.api.DAO.Entity.Klient;
 import pl.podlaski.api.Repo.KierowcaRepo;
 
 import java.util.List;
@@ -26,6 +27,10 @@ public class KierowcyService {
 
     public List<Kierowca> findAll(){
         return kierowcaRepo.findAll();
+    }
+
+    public Kierowca logIn(String email, String haslo) {
+        return kierowcaRepo.findByEmailAndHaslo(email, haslo);
     }
 
     public Kierowca save(Kierowca kierowca){
