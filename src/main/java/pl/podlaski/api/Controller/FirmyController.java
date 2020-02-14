@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.podlaski.api.DAO.Entity.Firma;
-import pl.podlaski.api.DAO.Entity.Klient;
 import pl.podlaski.api.DAO.Entity.Role;
-import pl.podlaski.api.DAO.Entity.Zlecenie;
 import pl.podlaski.api.LogowanieForma;
 import pl.podlaski.api.Service.FirmyService;
 import pl.podlaski.api.Service.RoleService;
@@ -17,9 +15,12 @@ import pl.podlaski.api.Service.RoleService;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Optional;
+
+
+
 @Slf4j
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/firmy")
 public class FirmyController {
 

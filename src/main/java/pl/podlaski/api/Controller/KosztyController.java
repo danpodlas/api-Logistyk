@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 @Slf4j
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/koszty")
 public class KosztyController {
 
