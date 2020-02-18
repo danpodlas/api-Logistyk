@@ -2,6 +2,7 @@ package pl.podlaski.api.DAO.Entity;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import javax.persistence.*;
 import java.text.ParseException;
@@ -18,23 +19,23 @@ public class Zlecenie {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "zlec_firmyEntity_id", referencedColumnName = "id")
+    @JoinColumn(name = "zlec_firma_id", referencedColumnName = "id")
     private Firma zlecFirma;
 
     @OneToOne
-    @JoinColumn(name = "zlec_klientEntity_id", referencedColumnName = "id")
-    private Klient zlecenieKlient;
+    @JoinColumn(name = "klient_id", referencedColumnName = "id")
+    private Klient klient;
 
     private String adreszal;
     private String adresroz;
 
     @ManyToOne
-    @JoinColumn(name = "przyjm_firmyEntity_id", referencedColumnName = "id")
+    @JoinColumn(name = "przyjm_firma_id", referencedColumnName = "id")
     private Firma przyjmFirma;
 
     @OneToOne
-    @JoinColumn(name = "przyjm_kierowcaEntity_id", referencedColumnName = "id")
-    private Kierowca przyjmKierowca;
+    @JoinColumn(name = "kierowca_id", referencedColumnName = "id")
+    private Kierowca kierowca;
 
     private String oskontakt;
     private int ilosckm;
@@ -52,6 +53,16 @@ public class Zlecenie {
 
     @Temporal(TemporalType.DATE)
     private Date datazakonczenia;
+
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Zlecenie() {
     }
@@ -72,12 +83,12 @@ public class Zlecenie {
         this.zlecFirma = zlecFirma;
     }
 
-    public Klient getZlecenieKlient() {
-        return zlecenieKlient;
+    public Klient getKlient() {
+        return klient;
     }
 
-    public void setZlecenieKlient(Klient zlecenieKlient) {
-        this.zlecenieKlient = zlecenieKlient;
+    public void setKlient(Klient klient) {
+        this.klient = klient;
     }
 
     public String getAdreszal() {
@@ -104,12 +115,12 @@ public class Zlecenie {
         this.przyjmFirma = przyjmFirma;
     }
 
-    public Kierowca getPrzyjmKierowca() {
-        return przyjmKierowca;
+    public Kierowca getKierowca() {
+        return kierowca;
     }
 
-    public void setPrzyjmKierowca(Kierowca przyjmKierowca) {
-        this.przyjmKierowca = przyjmKierowca;
+    public void setKierowca(Kierowca kierowca) {
+        this.kierowca = kierowca;
     }
 
     public String getOskontakt() {
@@ -172,7 +183,7 @@ public class Zlecenie {
         return datautworzenia;
     }
 
-    public void setDatautworzenia(Date datautworzenia) throws ParseException {
+    public void setDatautworzenia(Date datautworzenia) {
         this.datautworzenia = datautworzenia;
     }
 
@@ -192,17 +203,20 @@ public class Zlecenie {
         this.datazakonczenia = datazakonczenia;
     }
 
+    public static Logger getLog() {
+        return log;
+    }
 
     @Override
     public String toString() {
         return "Zlecenie{" +
                 "id=" + id +
                 ", zlecFirma=" + zlecFirma +
-                ", zlecenieKlient=" + zlecenieKlient +
+                ", klient=" + klient +
                 ", adreszal='" + adreszal + '\'' +
                 ", adresroz='" + adresroz + '\'' +
                 ", przyjmFirma=" + przyjmFirma +
-                ", przyjmKierowca=" + przyjmKierowca +
+                ", kierowca=" + kierowca +
                 ", oskontakt='" + oskontakt + '\'' +
                 ", ilosckm=" + ilosckm +
                 ", stawka=" + stawka +
@@ -213,6 +227,7 @@ public class Zlecenie {
                 ", datautworzenia=" + datautworzenia +
                 ", dataprzyjecia=" + dataprzyjecia +
                 ", datazakonczenia=" + datazakonczenia +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

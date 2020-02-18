@@ -25,7 +25,7 @@ public class Koszty {
     private String notka;
 
     @OneToOne
-    @JoinColumn(name = "firma_id", referencedColumnName = "id")
+    @JoinColumn(name = "firmy_id", referencedColumnName = "id")
     private Firma kosztyFirmy;
 
     @OneToOne

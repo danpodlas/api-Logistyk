@@ -60,11 +60,11 @@ public class ZlecenieController {
             zlecenieToUpdate = zlecenieService.findOne(id);
 
             zlecenieToUpdate.setZlecFirma(zlecenie.getZlecFirma());
-            zlecenieToUpdate.setZlecenieKlient(zlecenie.getZlecenieKlient());
+            zlecenieToUpdate.setKlient(zlecenie.getKlient());
             zlecenieToUpdate.setAdreszal(zlecenie.getAdreszal());
             zlecenieToUpdate.setAdresroz(zlecenie.getAdresroz());
             zlecenieToUpdate.setPrzyjmFirma(zlecenie.getPrzyjmFirma());
-            zlecenieToUpdate.setPrzyjmKierowca(zlecenie.getPrzyjmKierowca());
+            zlecenieToUpdate.setKierowca(zlecenie.getKierowca());
             zlecenieToUpdate.setOskontakt(zlecenie.getOskontakt());
             zlecenieToUpdate.setIlosckm(zlecenie.getIlosckm());
             zlecenieToUpdate.setStawka(zlecenie.getStawka());

@@ -3,6 +3,8 @@ package pl.podlaski.api.DAO.Entity;
 import javax.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @Entity
 @Table(name = "firma")
@@ -22,7 +24,7 @@ public class Firma {
     private String numerkonta;
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "roleid")
     private Role roleFirmy;
 
     public Firma() {

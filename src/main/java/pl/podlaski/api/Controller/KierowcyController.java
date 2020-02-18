@@ -4,11 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.podlaski.api.DAO.Entity.Kierowca;
 import pl.podlaski.api.DAO.Entity.Klient;
 import pl.podlaski.api.DAO.Entity.Role;
+import pl.podlaski.api.DAO.Entity.Samochod;
 import pl.podlaski.api.LogowanieForma;
 import pl.podlaski.api.Service.KierowcyService;
 import pl.podlaski.api.Service.RoleService;
@@ -16,6 +18,7 @@ import pl.podlaski.api.Service.RoleService;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -38,29 +41,42 @@ public class KierowcyController {
         return ResponseEntity.status(HttpStatus.OK).body(bookingList);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity findKierowca(@PathVariable("id") Long id) {
-        Kierowca kierowca = null;
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity findkierowca(@PathVariable("id") Long id) {
+        Optional<Kierowca> kierowca = null;
         try {
-            kierowca = kierowcyService.findOne(id);
-            log.info("Kierowca o id '{}' znaleziony", id);
+            kierowca = kierowcyService.findId(id);
+            log.info("Kierowca with id '{}' found", id);
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body(kierowca);
     }
 
-    @PostMapping("/logowanie")
+    @GetMapping(value = "/samochod/{id}")
+    public ResponseEntity findAutoKierowcy(@PathVariable("id") Long id) {
+        Optional<Kierowca> kierowca = null;
+        try {
+            kierowca = kierowcyService.findAutoId(id);
+            log.info("Kierowca with id '{}' found", id);
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(kierowca);
+    }
+
+
+    @GetMapping("/logowanie")
     public ResponseEntity<Kierowca> logowanieKierowca(@RequestBody LogowanieForma logowanieForma) {
         Kierowca kierowca = null;
         try {
             kierowca = kierowcyService.logIn(logowanieForma.getEmail(), logowanieForma.getHaslo());
+            return ResponseEntity.status(HttpStatus.OK).body(kierowca);
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             log.info("Brak użytkownika o mailu " + logowanieForma.getEmail() + "Lub hasło nieprawidłowe");
-            ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        return ResponseEntity.status(HttpStatus.OK).body(kierowca);
     }
 
     @PostMapping(value = "/Register")

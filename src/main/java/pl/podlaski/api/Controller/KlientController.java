@@ -48,7 +48,7 @@ public class KlientController {
         return ResponseEntity.status(HttpStatus.OK).body(klient);
     }
 
-    @PostMapping("/logowanie")
+    @GetMapping("/logowanie")
     public ResponseEntity<Klient> logowanieKlient(@RequestBody LogowanieForma logowanieForma) {
         Klient klient = null;
         try {

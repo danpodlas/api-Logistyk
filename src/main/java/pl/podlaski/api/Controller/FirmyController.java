@@ -50,7 +50,7 @@ public class FirmyController {
         return ResponseEntity.status(HttpStatus.OK).body(firma);
     }
 
-    @PostMapping("/logowanie")
+    @GetMapping("/logowanie")
     public ResponseEntity<Firma> logowanieFirma(@RequestBody LogowanieForma logowanieForma) {
         Firma firma = null;
         try {

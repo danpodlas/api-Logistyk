@@ -50,6 +50,42 @@ public class KosztyController {
         return ResponseEntity.status(HttpStatus.OK).body(koszty);
     }
 
+    @GetMapping(value = "/samochod/{id}")
+    public ResponseEntity findAutoKoszty(@PathVariable("id") Long id) {
+        Optional<Koszty> koszty = null;
+        try {
+            koszty = kosztyService.findSamochod(id);
+            log.info("Samochód,koszty with id '{}' found", id);
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(koszty);
+    }
+
+    @GetMapping(value = "/firma/{id}")
+    public ResponseEntity findFrimaKoszty(@PathVariable("id") Long id) {
+        Optional<Koszty> koszty = null;
+        try {
+            koszty = kosztyService.findFirma(id);
+            log.info("Firma, koszty with id '{}' found", id);
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(koszty);
+    }
+
+    @GetMapping(value = "/kierowca/{id}")
+    public ResponseEntity findKierowcaKoszty(@PathVariable("id") Long id) {
+        Optional<Koszty> koszty = null;
+        try {
+            koszty = kosztyService.findKierowca(id);
+            log.info("Kierowca, koszty with id '{}' found", id);
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(koszty);
+    }
+
     @PostMapping
     public ResponseEntity<Koszty> addKoszty(@RequestBody Koszty koszty) {
         kosztyService.save(koszty);
@@ -58,7 +94,6 @@ public class KosztyController {
     }
 
 
-    //TODO porzadnie sprawdzić
     @PutMapping(value = "/{id}")
     public Koszty updateKoszty(@PathVariable(value = "id") Long id,@RequestBody Koszty koszty) {
 

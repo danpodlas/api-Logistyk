@@ -67,20 +67,20 @@ create TABLE Kierowca
     miasto           VARCHAR,
     ulica            VARCHAR,
     nrdomu           VARCHAR,
-    datazatrudnienia VARCHAR,
+    datazatrudnienia date,
     email            VARCHAR,
     haslo            VARCHAR,
     numerkonta       VARCHAR,
-    role_id          int
+    role_id          int,
+    samochodid          int
 );
-insert into Kierowca(imie, nazwisko, peselnip, telefon, miasto, ulica, nrdomu, datazatrudnienia, email, haslo,
-                     numerkonta, role_id)
-VALUES ('Justyna','Kierowca','68092283046','200200200','Kraków','Wawelska','65/21','2017-02-05','justyna@o2.pl','kierowca','37967800023356457831088926',1),
-       ('Adrianna','Kierowca','79071079569','200200201','Piła','Lipna','61/1','2018-03-05','adrianna@o2.pl','kierowca','75878700003150464268639616',1),
-       ('Jan','Kierowca','95120270976','200200202','Rogów','Ciekawa','65','2019-11-01','jan@o2.pl','kierowca','41937010177185009762957155',1),
-       ('Artur','Kierowca','86102903278','200200203','Topielec','Kolorowa','5/91','2018-12-31','artur@o2.pl','kierowca','93919800037994935342131611',1),
-       ('Tomasz','Kierowca','82030949911','200200204','Lublin','Mroczna','6/1','2017-07-01','tomasz@o2.pl','kierowca','63841310940875473535528807',1),
-       ('Olek','Kierowca','90090307435','200200205','Zambrów','Skośna','11','2016-01-17','Olek@o2.pl','kierowca','80878700009538389637429016',1);
+insert into Kierowca(imie, nazwisko, peselnip, telefon, miasto, ulica, nrdomu, datazatrudnienia, email, haslo, numerkonta, role_id, samochodid)
+VALUES ('Justyna','Kierowca','68092283046','200200200','Kraków','Wawelska','65/21','2017-02-05','justyna@o2.pl','kierowca','37967800023356457831088926',1,1),
+       ('Adrianna','Kierowca','79071079569','200200201','Piła','Lipna','61/1','2018-03-05','adrianna@o2.pl','kierowca','75878700003150464268639616',1,1),
+       ('Jan','Kierowca','95120270976','200200202','Rogów','Ciekawa','65','2019-11-01','jan@o2.pl','kierowca','41937010177185009762957155',1,3),
+       ('Artur','Kierowca','86102903278','200200203','Topielec','Kolorowa','5/91','2018-12-31','artur@o2.pl','kierowca','93919800037994935342131611',1,4),
+       ('Tomasz','Kierowca','82030949911','200200204','Lublin','Mroczna','6/1','2017-07-01','tomasz@o2.pl','kierowca','63841310940875473535528807',1,5),
+       ('Olek','Kierowca','90090307435','200200205','Zambrów','Skośna','11','2016-01-17','Olek@o2.pl','kierowca','80878700009538389637429016',1,null);
 
 drop table if exists Firma cascade;
 create TABLE Firma
@@ -95,10 +95,10 @@ create TABLE Firma
     email             VARCHAR,
     haslo             VARCHAR,
     numerkonta        VARCHAR,
-    role_id           int
+    roleid           int
 );
 
-insert into Firma(nazwafirmy,nip, telefonkontaktowy, miasto, ulica, nrdomu, email, haslo, numerkonta, role_id)
+insert into Firma(nazwafirmy,nip, telefonkontaktowy, miasto, ulica, nrdomu, email, haslo, numerkonta, roleid)
 VALUES ('Transport Pilice','5276396974','300300300','Pilice', 'Warszawska', '16', 'pilice@firma.pl','firma','59113010759875343098345956',3),
        ('Transport Odludzie','1581476034','300300301','Odludzie', 'Polna', '1', 'odludzie@firma.pl','firma','53114011829548145256992672',3),
        ('Transport Mikoszewo','3944923621','300300302','Mikoszewo', 'Oka', '45', 'mikoszewo@firma.pl','firma','18902300064945248739451289',3),
@@ -133,27 +133,28 @@ VALUES (1,'PALIWO',367.68,'2019-12-12','Paliwo tankowane w Bytomiu',null, 1 ),
 drop table if exists Zlecenie cascade;
 create TABLE Zlecenie
 (
-    id                       INT IDENTITY PRIMARY KEY,
-    zlec_firmyEntity_id      int,
-    zlec_klientEntity_id     int,
-    adreszal                 VARCHAR,
-    adresroz                 VARCHAR,
-    przyjm_firmyEntity_id    int,
-    przyjm_kierowcaEntity_id int,
-    oskontakt                VARCHAR,
-    ilosckm                  int,
-    stawka                   double,
-    wartzlec                 double,
-    typladunku               varchar,
-    specjalny                varchar,
-    waga                     int,
-    datautworzenia           date,
-    dataprzyjecia            date,
-    datazakonczenia          date
+    id              INT IDENTITY PRIMARY KEY,
+    zlec_firma_id   int,
+    klient_id       int,
+    adreszal        VARCHAR,
+    adresroz        VARCHAR,
+    przyjm_firma_id int,
+    kierowca_id     int,
+    oskontakt       VARCHAR,
+    ilosckm         int,
+    stawka          double,
+    wartzlec        double,
+    typladunku      varchar,
+    specjalny       varchar,
+    waga            int,
+    datautworzenia  date,
+    dataprzyjecia   date,
+    datazakonczenia date,
+    status          varchar
 );
 
-insert into Zlecenie(zlec_firmyEntity_id, zlec_klientEntity_id, adreszal, adresroz, przyjm_firmyEntity_id, przyjm_kierowcaEntity_id, oskontakt, ilosckm, stawka, wartzlec, typladunku, specjalny, waga,datautworzenia,dataprzyjecia,datazakonczenia)
-VALUES ( null,1, 'Warszawa ul. Marywislka 44','Kraków, ul. Wioseena 12',null, 1,'Mirek tel. 500500500',350,3.0, 1050,'Palety',null,7000, '2020-01-03', '2020-01-03','2020-01-04'),
-       ( 1, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',null, 1,'Mirek tel. 500500500',350,2.8, 980,'Ubrania',null,9000, '2020-01-04', '2020-01-05',null),
-       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',null, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000, '2020-01-07', '2020-01-08', '2020-01-10'),
-       ( null,1, 'Lublin, ul. Kwiecista 42', 'Warszawa ul. Marywislka 44',null,2, 'Adam tel. 500500501',200,3.0, 600,'Węgiel',null,17000, '2020-01-09',null, null);
+insert into Zlecenie(zlec_firma_id, klient_id, adreszal, adresroz, przyjm_firma_id, kierowca_id, oskontakt, ilosckm, stawka, wartzlec, typladunku, specjalny, waga, datautworzenia, dataprzyjecia, datazakonczenia,status)
+VALUES ( null,1, 'Warszawa ul. Marywislka 44','Kraków, ul. Wioseena 12',null, 1,'Mirek tel. 500500500',350,3.0, 1050,'Palety',null,7000, '2020-01-03', '2020-01-03','2020-01-04','FINISH'),
+       ( 1, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',null, 1,'Mirek tel. 500500500',350,2.8, 980,'Ubrania',null,9000, '2020-01-04', '2020-01-05',null,'INPROGRESS'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',null, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000, '2020-01-07', '2020-01-08', '2020-01-10','FINISH'),
+       ( null,1, 'Lublin, ul. Kwiecista 42', 'Warszawa ul. Marywislka 44',null,2, 'Adam tel. 500500501',200,3.0, 600,'Węgiel',null,17000, '2020-01-09',null, null,'NEW');

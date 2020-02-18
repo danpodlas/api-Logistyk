@@ -30,9 +30,12 @@ public class Kierowca {
     @JoinColumn(name="role_id")
     private Role roleKierowca;
 
+    @OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name="samochodid")
+    private Samochod samochod;
+
     public Kierowca() {
     }
-
 
     public Long getId() {
         return id;
@@ -136,6 +139,14 @@ public class Kierowca {
 
     public void setRoleKierowca(Role roleKierowca) {
         this.roleKierowca = roleKierowca;
+    }
+
+    public Samochod getSamochod() {
+        return samochod;
+    }
+
+    public void setSamochod(Samochod samochod) {
+        this.samochod = samochod;
     }
 
     @Override

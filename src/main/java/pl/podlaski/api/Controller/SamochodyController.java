@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.podlaski.api.DAO.Entity.Samochod;
@@ -12,6 +13,7 @@ import pl.podlaski.api.Service.SamochodyService;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -32,12 +34,12 @@ public class SamochodyController {
         return ResponseEntity.status(HttpStatus.OK).body(samochodList);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity findSamochod(@PathVariable("id") Long id) {
-        Samochod samochod = null;
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity findCar(@PathVariable("id") Long id) {
+        Optional<Samochod> samochod = null;
         try {
-            samochod = samochodyService.findOne(id);
-            log.info("Samochod o id '{}' znaleziony", id);
+            samochod = samochodyService.findId(id);
+            log.info("Car with id '{}' found", id);
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
         }

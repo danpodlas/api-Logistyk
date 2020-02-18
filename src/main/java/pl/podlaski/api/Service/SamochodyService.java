@@ -2,7 +2,6 @@ package pl.podlaski.api.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.podlaski.api.DAO.Entity.Firma;
 import pl.podlaski.api.DAO.Entity.Samochod;
 import pl.podlaski.api.Repo.SamochodyRepo;
 
@@ -24,6 +23,11 @@ public class SamochodyService {
 
     public Samochod findOne(long id) {
         return samochodyRepo.getOne(id);
+    }
+
+
+    public Optional<Samochod> findId(long id) {
+        return samochodyRepo.findById(id);
     }
 
     public Samochod save(Samochod samochod){
