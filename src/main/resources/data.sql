@@ -49,7 +49,7 @@ create TABLE Klient
     role_id  int
 );
 insert into Klient(imie, nazwisko, pesel, telefon, miasto, ulica, nrdomu, email, haslo, role_id)
-VALUES ('Jan', 'Pierwszy', '71111103034', '100100100', 'Warszawa', 'Ogrodowa', '12/7', 'emailjan@wp.pl', 'klient', 2),
+VALUES ('Jan', 'Pierwszy', '71111103034', '100100100', 'Warszawa', 'Ogrodowa', '12/7', 'k', 'k', 2),
        ('Adam', 'Pierwszy', '64083143313', '100100101', 'Toruń', 'Bursztynowa', '3/9', 'emailadam@wp.pl', 'klient', 2),
        ('Ewa', 'Pierwsza', '64081304943', '100100102', 'Wilkowyje', 'Koła', '125/71', 'emailewa@wp.pl', 'klient', 2),
        ('Krystyna', 'Pierwsza', '85061792383', '100100103', 'Kraków', 'Odyńca', '1/9', 'emailkrystyna@wp.pl', 'klient', 2),
@@ -75,7 +75,7 @@ create TABLE Kierowca
     samochodid          int
 );
 insert into Kierowca(imie, nazwisko, peselnip, telefon, miasto, ulica, nrdomu, datazatrudnienia, email, haslo, numerkonta, role_id, samochodid)
-VALUES ('Justyna','Kierowca','68092283046','200200200','Kraków','Wawelska','65/21','2017-02-05','justyna@o2.pl','kierowca','37967800023356457831088926',1,1),
+VALUES ('Justyna','Kierowca','68092283046','200200200','Kraków','Wawelska','65/21','2017-02-05','k','k','37967800023356457831088926',1,1),
        ('Adrianna','Kierowca','79071079569','200200201','Piła','Lipna','61/1','2018-03-05','adrianna@o2.pl','kierowca','75878700003150464268639616',1,1),
        ('Jan','Kierowca','95120270976','200200202','Rogów','Ciekawa','65','2019-11-01','jan@o2.pl','kierowca','41937010177185009762957155',1,3),
        ('Artur','Kierowca','86102903278','200200203','Topielec','Kolorowa','5/91','2018-12-31','artur@o2.pl','kierowca','93919800037994935342131611',1,4),
@@ -99,7 +99,7 @@ create TABLE Firma
 );
 
 insert into Firma(nazwafirmy,nip, telefonkontaktowy, miasto, ulica, nrdomu, email, haslo, numerkonta, roleid)
-VALUES ('Transport Pilice','5276396974','300300300','Pilice', 'Warszawska', '16', 'pilice@firma.pl','firma','59113010759875343098345956',3),
+VALUES ('Transport Pilice','5276396974','300300300','Pilice', 'Warszawska', '16', 'f','f','59113010759875343098345956',3),
        ('Transport Odludzie','1581476034','300300301','Odludzie', 'Polna', '1', 'odludzie@firma.pl','firma','53114011829548145256992672',3),
        ('Transport Mikoszewo','3944923621','300300302','Mikoszewo', 'Oka', '45', 'mikoszewo@firma.pl','firma','18902300064945248739451289',3),
        ('Transport Zakopanem','1097920936','300300303','Zakopanem', 'Polki', '5', 'zakopanem@firma.pl','firma','69124024257403114525577894',3),

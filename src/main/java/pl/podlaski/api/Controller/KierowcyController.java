@@ -66,7 +66,7 @@ public class KierowcyController {
     }
 
 
-    @GetMapping("/logowanie")
+    @PostMapping("/logowanie")
     public ResponseEntity<Kierowca> logowanieKierowca(@RequestBody LogowanieForma logowanieForma) {
         Kierowca kierowca = null;
         try {
@@ -79,7 +79,7 @@ public class KierowcyController {
         }
     }
 
-    @PostMapping(value = "/Register")
+    @PostMapping(value = "/Register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Kierowca> addKierowca(@RequestBody Kierowca kierowca) {
         Role role = roleService.findByName("KIEROWCA");
         kierowca.setRoleKierowca(role);

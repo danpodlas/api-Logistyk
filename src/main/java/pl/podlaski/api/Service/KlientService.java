@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.podlaski.api.DAO.Entity.Klient;
 import pl.podlaski.api.Repo.KlientRepo;
+import pl.podlaski.api.Repo.KlientRepoCrud;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public class KlientService {
 
     private KlientRepo klientRepo;
+    private KlientRepoCrud klientRepoCrud;
 
     @Autowired
     public KlientService(KlientRepo klientRepo) {
@@ -30,7 +32,7 @@ public class KlientService {
     }
 
     public Klient save(Klient klient) {
-        return klientRepo.save(klient);
+        return klientRepoCrud.save(klient);
     }
 
     public Klient update(Klient klient) {

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.podlaski.api.DAO.Entity.Klient;
@@ -48,23 +49,23 @@ public class KlientController {
         return ResponseEntity.status(HttpStatus.OK).body(klient);
     }
 
-    @GetMapping("/logowanie")
+    @PostMapping("/logowanie")
     public ResponseEntity<Klient> logowanieKlient(@RequestBody LogowanieForma logowanieForma) {
         Klient klient = null;
         try {
             klient = klientService.logIn(logowanieForma.getEmail(), logowanieForma.getHaslo());
+            return ResponseEntity.status(HttpStatus.OK).body(klient);
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             log.info("Brak użytkownika o mailu " + logowanieForma.getEmail() + "Lub hasło nieprawidłowe");
-            ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        return ResponseEntity.status(HttpStatus.OK).body(klient);
     }
 
-    @PostMapping(value = "/Register")
+    @PostMapping(value = "/register")
     public ResponseEntity<Klient> addKlient(@RequestBody Klient klient) {
         Role role = roleService.findByName("KLIENT");
-        klient.setRole(role);
+//        klient.setRole(role);
         klientService.save(klient);
         log.info("Klient {} dodany", klient.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(klient);
