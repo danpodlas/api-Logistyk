@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.podlaski.api.DAO.Entity.Klient;
@@ -27,8 +26,9 @@ public class KlientController {
     private RoleService roleService;
 
     @Autowired
-    public KlientController(KlientService klientService) {
+    public KlientController(KlientService klientService, RoleService roleService) {
         this.klientService = klientService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/")
@@ -62,13 +62,28 @@ public class KlientController {
         }
     }
 
+
     @PostMapping(value = "/register")
-    public ResponseEntity<Klient> addKlient(@RequestBody Klient klient) {
+    public ResponseEntity<?> addKlient(@RequestBody Klient klient) {
+        Klient klient1 = null;
+
+        if (klient == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Klient is null");
+        }
+
         Role role = roleService.findByName("KLIENT");
-//        klient.setRole(role);
-        klientService.save(klient);
-        log.info("Klient {} dodany", klient.toString());
-        return ResponseEntity.status(HttpStatus.CREATED).body(klient);
+        if (role == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Role is null");
+        }
+        klient.setRole(role);
+        klient1 = klientService.save(klient);
+        if (klient1 == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Klient1 not saved");
+
+        }
+        log.info("Klient {} dodany", klient1.toString());
+
+        return ResponseEntity.status(HttpStatus.OK).body(klient1);
     }
 
     @PutMapping(value = "/{id}")
