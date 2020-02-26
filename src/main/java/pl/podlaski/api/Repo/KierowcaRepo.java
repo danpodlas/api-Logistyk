@@ -18,4 +18,6 @@ public interface KierowcaRepo extends JpaRepository<Kierowca,Long> {
     Optional<Kierowca> findById(Long id);
 
     Optional<Kierowca> findSamochodById(Long id);
+
+    Kierowca findById(long id);
 }

@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.podlaski.api.DAO.Entity.Kierowca;
-import pl.podlaski.api.DAO.Entity.Klient;
-import pl.podlaski.api.DAO.Entity.Role;
-import pl.podlaski.api.DAO.Entity.Samochod;
+import pl.podlaski.api.DAO.Entity.*;
 import pl.podlaski.api.LogowanieForma;
 import pl.podlaski.api.Service.KierowcyService;
 import pl.podlaski.api.Service.RoleService;
@@ -43,7 +40,7 @@ public class KierowcyController {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity findkierowca(@PathVariable("id") Long id) {
-        Optional<Kierowca> kierowca = null;
+        Kierowca kierowca = null;
         try {
             kierowca = kierowcyService.findId(id);
             log.info("Kierowca with id '{}' found", id);
@@ -79,14 +76,38 @@ public class KierowcyController {
         }
     }
 
-    @PostMapping(value = "/Register", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Kierowca> addKierowca(@RequestBody Kierowca kierowca) {
+//    @PostMapping(value = "/Register", consumes = "application/json", produces = "application/json")
+//    public ResponseEntity<Kierowca> addKierowca(@RequestBody Kierowca kierowca) {
+//        Role role = roleService.findByName("KIEROWCA");
+//        kierowca.setRoleKierowca(role);
+//        kierowcyService.save(kierowca);
+//        log.info("Kierowca {} dodany", kierowca.toString());
+//        return ResponseEntity.status(HttpStatus.CREATED).body(kierowca);
+//    }
+
+    @PostMapping(value = "/register")
+    public ResponseEntity<?> addKierowca(@RequestBody Kierowca kierowca) {
+        Kierowca kierowca1 = null;
+
+        if (kierowca == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Kierowca is null");
+        }
+
         Role role = roleService.findByName("KIEROWCA");
+        if (role == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Role is null");
+        }
         kierowca.setRoleKierowca(role);
-        kierowcyService.save(kierowca);
-        log.info("Kierowca {} dodany", kierowca.toString());
-        return ResponseEntity.status(HttpStatus.CREATED).body(kierowca);
+        kierowca1 = kierowcyService.save(kierowca);
+        if (kierowca1 == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("kierowca1 not saved");
+
+        }
+        log.info("Kierowca {} dodany", kierowca1.toString());
+
+        return ResponseEntity.status(HttpStatus.OK).body(kierowca1);
     }
+
 
     @PutMapping(value = "/{id}")
     public Kierowca updateKierowca(@PathVariable(value = "id") Long id, @RequestBody Kierowca kierowca) {

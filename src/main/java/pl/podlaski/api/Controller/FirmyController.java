@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.podlaski.api.DAO.Entity.Firma;
+import pl.podlaski.api.DAO.Entity.Klient;
 import pl.podlaski.api.DAO.Entity.Role;
 import pl.podlaski.api.LogowanieForma;
 import pl.podlaski.api.Service.FirmyService;
@@ -28,8 +29,9 @@ public class FirmyController {
     private RoleService roleService;
 
     @Autowired
-    public FirmyController(FirmyService firmyService) {
+    public FirmyController(FirmyService firmyService, RoleService roleService) {
         this.firmyService = firmyService;
+        this.roleService= roleService;
     }
 
     @GetMapping("/")
@@ -64,13 +66,36 @@ public class FirmyController {
         return ResponseEntity.status(HttpStatus.OK).body(firma);
     }
 
-    @PostMapping(value = "/Register")
-    public ResponseEntity<Firma> addFirma(@RequestBody Firma firma) {
-        Role role = roleService.findByName("FIRMA");
+//    @PostMapping(value = "/Register")
+//    public ResponseEntity<?> addFirma(@RequestBody Firma firma) {
+//        Role role = roleService.findByName("FIRMA");
+//        firma.setRoleFirmy(role);
+//        firmyService.save(firma);
+//        log.info("Firma {} dodana", firma.toString());
+//        return ResponseEntity.status(HttpStatus.CREATED).body(firma);
+//    }
+
+    @PostMapping(value = "/register")
+    public ResponseEntity<?> addFirma(@RequestBody Firma firma) {
+        Firma firma1 = null;
+
+        if (firma == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Firma is null");
+        }
+
+        Role role = roleService.findByName("KIEROWCA");
+        if (role == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Role is null");
+        }
         firma.setRoleFirmy(role);
-        firmyService.save(firma);
-        log.info("Firma {} dodana", firma.toString());
-        return ResponseEntity.status(HttpStatus.CREATED).body(firma);
+        firma1 = firmyService.save(firma);
+        if (firma1 == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("firma1 not saved");
+
+        }
+        log.info("Firma {} dodana", firma1.toString());
+
+        return ResponseEntity.status(HttpStatus.OK).body(firma1);
     }
 
     @PutMapping(value = "/{id}")

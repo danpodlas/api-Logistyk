@@ -11,6 +11,8 @@ import pl.podlaski.api.DAO.Entity.Klient;
 @Repository
 public interface KlientRepo extends JpaRepository<Klient, Long> {
     Klient findByEmailAndHaslo(String email, String haslo);
+
+    Klient findById(long id);
 }
 
 

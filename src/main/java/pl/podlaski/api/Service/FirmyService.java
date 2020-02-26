@@ -30,6 +30,10 @@ public class FirmyService {
         return firmyRepo.getOne(id);
     }
 
+    public Firma findId(long id) {
+        return firmyRepo.findById(id);
+    }
+
     public Firma save(Firma firma){
         return firmyRepo.save(firma);
     }

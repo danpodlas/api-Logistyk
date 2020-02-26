@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 import pl.podlaski.api.DAO.Entity.Klient;
 import pl.podlaski.api.Repo.KlientRepo;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Transactional
 public class KlientService {
 
     private KlientRepo klientRepo;
@@ -23,6 +26,10 @@ public class KlientService {
 
     public Klient findOne(long id) {
         return klientRepo.getOne(id);
+    }
+
+    public Klient findId(long id) {
+        return klientRepo.findById(id);
     }
 
     public Klient logIn(String email, String haslo) {

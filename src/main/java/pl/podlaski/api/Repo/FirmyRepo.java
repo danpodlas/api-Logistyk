@@ -11,4 +11,6 @@ import pl.podlaski.api.DAO.Entity.Klient;
 @Repository
 public interface FirmyRepo extends JpaRepository<Firma,Long> {
     Firma findByEmailAndHaslo(String email, String haslo);
+
+    Firma findById(long id);
 }
