@@ -47,7 +47,7 @@ public class ZlecenieController {
     public ResponseEntity findZlecenie(@PathVariable("id") Long id) {
         Zlecenie zlecenie = null;
         try {
-            zlecenie = zlecenieService.findOne(id);
+            zlecenie = zlecenieService.findId(id);
             log.info("Zlecenie o id '{}' znaleziono", id);
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
@@ -55,10 +55,10 @@ public class ZlecenieController {
         return ResponseEntity.status(HttpStatus.OK).body(zlecenie);
     }
 
-    @PostMapping(value = "/{id}/{rola}")
+    @PostMapping(value = "/id={id}&rola={rola}")
     public ResponseEntity<?> addZlecenie(@PathVariable(value = "id") Long id, @PathVariable(value = "rola") String rola, @RequestBody Zlecenie zlecenie) {
         Zlecenie zlecenie1 = null;
-        System.out.println("id: "+id+" rola: "+rola);
+        System.out.println("id: " + id + " rola: " + rola);
 
         if (rola.equals("Indywidualny")) {
             Klient klient = klientService.findId(id);
@@ -69,9 +69,7 @@ public class ZlecenieController {
                 zlecenie.setKlient(klient);
                 System.out.println("Klient: " + klient);
             }
-        }
-
-        else if (rola.equals("Firmy")){
+        } else if (rola.equals("Firmy")) {
             Firma firma = firmyService.findId(id);
             if (firma == null) {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("firma is null");
@@ -86,70 +84,46 @@ public class ZlecenieController {
         return ResponseEntity.status(HttpStatus.OK).body(zlecenie1);
     }
 
-    //todo
-    @PostMapping(value = "/przyjmij/{id}/{rola}")
-    public ResponseEntity<?> przyjmijZlecenie(@PathVariable(value = "id") Long id, @PathVariable(value = "rola") String rola, @RequestBody Zlecenie zlecenie) {
-        Zlecenie zlecenie1 = null;
-        System.out.println("id: "+id+" rola: "+rola);
-
-        if (rola.equals("Kierowca")) {
-            Kierowca kierowca = kierowcyService.findId(id);
-            if (kierowca == null) {
-                System.out.println("Klient");
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("klient is null");
-            } else {
-                zlecenie.setKierowca(kierowca);
-                System.out.println("kierowca: " + kierowca);
-            }
-        }
-
-        else if (rola.equals("Firmy")){
-            Firma firma = firmyService.findId(id);
-            if (firma == null) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("firma is null");
-            } else {
-                zlecenie.setPrzyjmFirma(firma);
-                System.out.println("firma: " + firma);
-            }
-        }
-        zlecenie1 = zlecenieService.save(zlecenie);
-        log.info("Zlecenie {} dodane", zlecenie1.toString());
-        return ResponseEntity.status(HttpStatus.OK).body(zlecenie1);
-    }
-
-    @PutMapping(value = "/{id}")
-    public Zlecenie updateZlecenie(@PathVariable(value = "id") Long id, @RequestBody Zlecenie zlecenie) throws ParseException {
-
+    @PutMapping(value = "/przyjmij/{idzlec}/{rola}/{id}")
+    public ResponseEntity<?> przyjmijZlecenie(@PathVariable(value = "id") Long idzlec, @PathVariable(value = "rola") String rola, @PathVariable(value = "id") Long id) {
+        System.out.println("id: " + id + " rola: " + rola);
         Zlecenie zlecenieToUpdate = null;
+        Zlecenie zlecenie1 = null;
+        zlecenieToUpdate= zlecenieService.findId(idzlec);
+        System.out.println("Zlecenie: " + zlecenieToUpdate);
         try {
-            zlecenieToUpdate = zlecenieService.findOne(id);
 
-            zlecenieToUpdate.setZlecFirma(zlecenie.getZlecFirma());
-            zlecenieToUpdate.setKlient(zlecenie.getKlient());
-            zlecenieToUpdate.setAdreszal(zlecenie.getAdreszal());
-            zlecenieToUpdate.setAdresroz(zlecenie.getAdresroz());
-            zlecenieToUpdate.setPrzyjmFirma(zlecenie.getPrzyjmFirma());
-            zlecenieToUpdate.setKierowca(zlecenie.getKierowca());
-            zlecenieToUpdate.setOskontakt(zlecenie.getOskontakt());
-            zlecenieToUpdate.setIlosckm(zlecenie.getIlosckm());
-            zlecenieToUpdate.setStawka(zlecenie.getStawka());
-            zlecenieToUpdate.setWartzlec(zlecenie.getWartzlec());
-            zlecenieToUpdate.setTypladunku(zlecenie.getTypladunku());
-            zlecenieToUpdate.setSpecjalny(zlecenie.getSpecjalny());
-            zlecenieToUpdate.setWaga(zlecenie.getWaga());
-            zlecenieToUpdate.setDatautworzenia(zlecenie.getDatautworzenia());
-            zlecenieToUpdate.setDataprzyjecia(zlecenie.getDataprzyjecia());
-            zlecenieToUpdate.setDatazakonczenia(zlecenie.getDatazakonczenia());
+            if (rola.equals("Kierowca")) {
+                Kierowca kierowca = kierowcyService.findId(id);
+                if (kierowca == null) {
+                    System.out.println("Kierowca");
+                    return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Kierowca is null");
+                } else {
+                    zlecenieToUpdate.setKierowca(kierowca);
+                    System.out.println("kierowca: " + kierowca);
+                }
+            } else if (rola.equals("Firmy")) {
+                Firma firma = firmyService.findId(id);
+                if (firma == null) {
+                    return ResponseEntity.status(HttpStatus.NO_CONTENT).body("firma is null");
+                } else {
+                    zlecenieToUpdate.setPrzyjmFirma(firma);
+                    System.out.println("firma: " + firma);
+                }
+
+            }
+            zlecenieToUpdate.setStatus("W realizacji");
+            System.out.println("Próba poszła");
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
 
-        zlecenieService.update(zlecenieToUpdate);
-        log.info("Zaktualizowano dane zlecenia :'{}'", zlecenieToUpdate.toString());
-        ResponseEntity.status(HttpStatus.OK).body(zlecenieToUpdate);
-        return zlecenieService.update(zlecenieToUpdate);
+        zlecenie1 = zlecenieService.update(zlecenieToUpdate);
+        log.info("Zlecenie {} przyjęte", zlecenie1.toString());
+        return ResponseEntity.status(HttpStatus.OK).body(zlecenie1);
     }
+
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity deleteZlecenie(@PathVariable(value = "id") @NotBlank Long id) {

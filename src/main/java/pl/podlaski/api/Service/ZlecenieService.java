@@ -28,6 +28,10 @@ public class ZlecenieService {
         return zleceniaRepo.getOne(id);
     }
 
+    public Zlecenie findId(long id) {
+        return zleceniaRepo.findById(id);
+    }
+
     public Zlecenie save(Zlecenie zlecenie){
         return zleceniaRepo.save(zlecenie);
     }

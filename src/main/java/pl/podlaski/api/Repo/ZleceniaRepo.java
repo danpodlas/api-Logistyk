@@ -7,4 +7,7 @@ import pl.podlaski.api.DAO.Entity.Zlecenie;
 @CrossOrigin("http://localhost:4200")
 @Repository
 public interface ZleceniaRepo extends JpaRepository<Zlecenie,Long> {
+
+    Zlecenie findById(long id);
+
 }
