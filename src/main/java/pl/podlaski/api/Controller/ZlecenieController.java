@@ -1,5 +1,6 @@
 package pl.podlaski.api.Controller;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,6 +17,8 @@ import pl.podlaski.api.Service.ZlecenieService;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -55,6 +58,34 @@ public class ZlecenieController {
         return ResponseEntity.status(HttpStatus.OK).body(zlecenie);
     }
 
+
+    //////////////////////////////////////////////////////////////////////////
+    @GetMapping(value = "/moje/id={id}")
+    public ResponseEntity<List> findZlecenia(@PathVariable("id") Long id) {
+        List<Zlecenie> zlecenie = null;
+        try {
+            zlecenie = zlecenieService.findKlientById(id);
+            log.info("Zlecenia o id '{}' znaleziono", id);
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(zlecenie);
+    }
+
+
+
+    @GetMapping(value = "/new")
+    public ResponseEntity<List> findNew() {
+        List<Zlecenie> zlecenie = null;
+        try {
+            zlecenie = zlecenieService.findByStatus("FINISH");
+            log.info("Zlecenia o id '{}' znaleziono");
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(zlecenie);
+    }
+
     @PostMapping(value = "/id={id}&rola={rola}")
     public ResponseEntity<?> addZlecenie(@PathVariable(value = "id") Long id, @PathVariable(value = "rola") String rola, @RequestBody Zlecenie zlecenie) {
         Zlecenie zlecenie1 = null;
@@ -78,21 +109,24 @@ public class ZlecenieController {
                 System.out.println("firma: " + firma);
             }
         }
+        Date date = new Date();
+        zlecenie.setDatautworzenia(date);
         zlecenie.setStatus("NOWE");
         zlecenie1 = zlecenieService.save(zlecenie);
         log.info("Zlecenie {} dodane", zlecenie1.toString());
         return ResponseEntity.status(HttpStatus.OK).body(zlecenie1);
     }
 
-    @PutMapping(value = "/przyjmij/{idzlec}/{rola}/{id}")
-    public ResponseEntity<?> przyjmijZlecenie(@PathVariable(value = "id") Long idzlec, @PathVariable(value = "rola") String rola, @PathVariable(value = "id") Long id) {
-        System.out.println("id: " + id + " rola: " + rola);
+    @PutMapping(value = "/przyjmij/idzlec={idzlec}&rola={rola}&id={id}")
+    public ResponseEntity<?> przyjmijZlecenie(@PathVariable(value = "idzlec") Long idzlec, @PathVariable(value = "rola") String rola, @PathVariable(value = "id") Long id) {
+        System.out.println("idzlec "+idzlec+ " id: " + id + " rola: " + rola);
         Zlecenie zlecenieToUpdate = null;
         Zlecenie zlecenie1 = null;
-        zlecenieToUpdate= zlecenieService.findId(idzlec);
+        zlecenieToUpdate = zlecenieService.findId(idzlec);
+
+        Date date = new Date();
         System.out.println("Zlecenie: " + zlecenieToUpdate);
         try {
-
             if (rola.equals("Kierowca")) {
                 Kierowca kierowca = kierowcyService.findId(id);
                 if (kierowca == null) {
@@ -110,10 +144,9 @@ public class ZlecenieController {
                     zlecenieToUpdate.setPrzyjmFirma(firma);
                     System.out.println("firma: " + firma);
                 }
-
             }
             zlecenieToUpdate.setStatus("W realizacji");
-            System.out.println("Próba poszła");
+            zlecenieToUpdate.setDataprzyjecia(date);
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -121,6 +154,27 @@ public class ZlecenieController {
 
         zlecenie1 = zlecenieService.update(zlecenieToUpdate);
         log.info("Zlecenie {} przyjęte", zlecenie1.toString());
+        return ResponseEntity.status(HttpStatus.OK).body(zlecenie1);
+    }
+
+    @PutMapping(value = "/zakoncz/idzlec={idzlec}")
+    public ResponseEntity<?> zakonczZlecenie(@PathVariable(value = "idzlec") Long idzlec) {
+        Zlecenie zlecenieToUpdate = null;
+        Zlecenie zlecenie1 = null;
+        zlecenieToUpdate = zlecenieService.findId(idzlec);
+
+        Date date = new Date();
+        System.out.println("Zlecenie: " + zlecenieToUpdate);
+        try {
+            zlecenieToUpdate.setStatus("Zakończone");
+            zlecenieToUpdate.setDatazakonczenia(date);
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+            ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        zlecenie1 = zlecenieService.update(zlecenieToUpdate);
+        log.info("Zlecenie {} zakonczone", zlecenie1.toString());
         return ResponseEntity.status(HttpStatus.OK).body(zlecenie1);
     }
 
