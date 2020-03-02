@@ -9,6 +9,7 @@ import pl.podlaski.api.DAO.Entity.Kierowca;
 import pl.podlaski.api.DAO.Entity.Klient;
 import pl.podlaski.api.DAO.Entity.Samochod;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin("http://localhost:4200")
@@ -20,4 +21,6 @@ public interface KierowcaRepo extends JpaRepository<Kierowca,Long> {
     Optional<Kierowca> findSamochodById(Long id);
 
     Kierowca findById(long id);
+
+    List<Kierowca> findKierowcaBySamochodId(long id);
 }

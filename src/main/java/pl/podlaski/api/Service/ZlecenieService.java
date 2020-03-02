@@ -45,15 +45,15 @@ public class ZlecenieService {
     }
 
     public List<Zlecenie> findKlientById(long s) {
-        return zleceniaRepo.findZlecenieByKlient_id(s);
+        return zleceniaRepo.findZlecenieByKlient_Id(s);
     }
 
     public List<Zlecenie> findKierowcaById(long s) {
         return zleceniaRepo.findZlecenieByKierowca_id(s);
     }
 
-//    public List<Zlecenie> findFirmaById(long s) {
-//        return zleceniaRepo.findZlecenieByZlec_firma_id(s);
-//    }
+    public List<Zlecenie> findFirmaById(long s) {
+        return zleceniaRepo.findAllByPrzyjmFirmaIdOrZlecFirmaId(s,s);
+    }
 
 }

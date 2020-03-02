@@ -27,6 +27,10 @@ public class Firma {
     @JoinColumn(name = "roleid")
     private Role roleFirmy;
 
+    @OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name="samochodid")
+    private Samochod samochod;
+
     public Firma() {
     }
 
@@ -118,8 +122,17 @@ public class Firma {
         this.roleFirmy = roleFirmy;
     }
 
+    public Samochod getSamochod() {
+        return samochod;
+    }
+
+    public void setSamochod(Samochod samochod) {
+        this.samochod = samochod;
+    }
+
     @Override
-    public String toString() {
+    public String
+    toString() {
         return "Firma{" +
                 "id=" + id +
                 ", nazwafirmy='" + nazwafirmy + '\'' +
@@ -132,6 +145,7 @@ public class Firma {
                 ", haslo='" + haslo + '\'' +
                 ", numerkonta='" + numerkonta + '\'' +
                 ", roleFirmy=" + roleFirmy +
+                ", samochod=" + samochod +
                 '}';
     }
 }

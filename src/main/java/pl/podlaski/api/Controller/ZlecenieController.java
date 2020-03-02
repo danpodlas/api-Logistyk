@@ -67,9 +67,10 @@ public class ZlecenieController {
             if (rola.equals("Indywidualny")) {
                 zlecenie = zlecenieService.findKlientById(id);
             }
-//            if (rola.equals("Firmy")) {
-//                zlecenie = zlecenieService.findFirmaById(id);
-//            }
+            if (rola.equals("Firmy")) {
+                zlecenie = zlecenieService.findFirmaById(id);
+                System.out.println(zlecenie);
+            }
             if (rola.equals("Kierowca")) {
                 zlecenie = zlecenieService.findKierowcaById(id);
             }

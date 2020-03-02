@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.podlaski.api.DAO.Entity.Kierowca;
 import pl.podlaski.api.DAO.Entity.Klient;
+import pl.podlaski.api.DAO.Entity.Samochod;
 import pl.podlaski.api.Repo.KierowcaRepo;
 
 import java.util.List;
@@ -53,6 +54,10 @@ public class KierowcyService {
 
     public void delete(long id){
         kierowcaRepo.deleteById(id);
+    }
+
+    public List<Kierowca> findMyCar(long id){
+        return kierowcaRepo.findKierowcaBySamochodId(id);
     }
 
 }

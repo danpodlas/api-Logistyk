@@ -11,6 +11,7 @@ import pl.podlaski.api.DAO.Entity.*;
 import pl.podlaski.api.LogowanieForma;
 import pl.podlaski.api.Service.KierowcyService;
 import pl.podlaski.api.Service.RoleService;
+import pl.podlaski.api.Service.SamochodyService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
@@ -25,17 +26,36 @@ public class KierowcyController {
 
     private final RoleService roleService;
     private final KierowcyService kierowcyService;
+    private final SamochodyService samochodyService;
 
     @Autowired
-    public KierowcyController(RoleService roleService, KierowcyService kierowcyService) {
+    public KierowcyController(RoleService roleService, KierowcyService kierowcyService, SamochodyService samochodyService) {
         this.roleService = roleService;
         this.kierowcyService = kierowcyService;
+        this.samochodyService = samochodyService;
     }
 
     @GetMapping("/")
     ResponseEntity<List<Kierowca>> getAll() {
         List<Kierowca> bookingList = kierowcyService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(bookingList);
+    }
+
+
+    //todo do implementacji w apce
+    @GetMapping(value = "/moje/id={id}")
+    public ResponseEntity findMojeAuto(@PathVariable("id") Long id) {
+        Kierowca kierowca = null;
+        Samochod samochod = null;
+        try {
+            kierowca = kierowcyService.findOne(id);
+            System.out.println(kierowca);
+            samochod = samochodyService.findOne(kierowca.getSamochod().getId());
+            log.info("Znaleziono samochod dla użytkonwika o id " + id );
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(samochod);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)

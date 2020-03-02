@@ -6,12 +6,11 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.podlaski.api.DAO.Entity.Firma;
-import pl.podlaski.api.DAO.Entity.Klient;
-import pl.podlaski.api.DAO.Entity.Role;
+import pl.podlaski.api.DAO.Entity.*;
 import pl.podlaski.api.LogowanieForma;
 import pl.podlaski.api.Service.FirmyService;
 import pl.podlaski.api.Service.RoleService;
+import pl.podlaski.api.Service.SamochodyService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
@@ -27,11 +26,13 @@ public class FirmyController {
 
     private FirmyService firmyService;
     private RoleService roleService;
+    private SamochodyService samochodyService;
 
     @Autowired
-    public FirmyController(FirmyService firmyService, RoleService roleService) {
+    public FirmyController(FirmyService firmyService, RoleService roleService, SamochodyService samochodyService) {
         this.firmyService = firmyService;
         this.roleService= roleService;
+        this.samochodyService=samochodyService;
     }
 
     @GetMapping("/")
@@ -50,6 +51,21 @@ public class FirmyController {
             log.error(e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body(firma);
+    }
+
+    @GetMapping(value = "/moje/id={id}")
+    public ResponseEntity findMojeAuto(@PathVariable("id") Long id) {
+        Firma firma = null;
+        Samochod samochod = null;
+        try {
+            firma = firmyService.findOne(id);
+            System.out.println(firma);
+            samochod = samochodyService.findOne(firma.getSamochod().getId());
+            log.info("Znaleziono samochod dla użytkonwika o id " + id );
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(samochod);
     }
 
     @PostMapping("/logowanie")
