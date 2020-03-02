@@ -157,4 +157,4 @@ insert into Zlecenie(zlec_firma_id, klient_id, adreszal, adresroz, przyjm_firma_
 VALUES ( null,1, 'Warszawa ul. Marywislka 44','Kraków, ul. Wioseena 12',null, 1,'Mirek tel. 500500500',350,3.0, 1050,'Palety',null,7000, '2020-01-03', '2020-01-03','2020-01-04','FINISH'),
        ( 1, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',null, 1,'Mirek tel. 500500500',350,2.8, 980,'Ubrania',null,9000, '2020-01-04', '2020-01-05',null,'INPROGRESS'),
        ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',null, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000, '2020-01-07', '2020-01-08', '2020-01-10','FINISH'),
-       ( null,1, 'Lublin, ul. Kwiecista 42', 'Warszawa ul. Marywislka 44',null,2, 'Adam tel. 500500501',200,3.0, 600,'Węgiel',null,17000, '2020-01-09',null, null,'NEW');
+       ( null,1, 'Lublin, ul. Kwiecista 42', 'Warszawa ul. Marywislka 44',null,2, 'Adam tel. 500500501',200,3.0, 600,'Węgiel',null,17000, '2020-01-09',null, null,'NOWE');

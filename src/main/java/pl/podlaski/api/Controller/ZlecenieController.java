@@ -60,12 +60,20 @@ public class ZlecenieController {
 
 
     //////////////////////////////////////////////////////////////////////////
-    @GetMapping(value = "/moje/id={id}")
-    public ResponseEntity<List> findZlecenia(@PathVariable("id") Long id) {
+    @GetMapping(value = "/moje/id={id}&rola={rola}")
+    public ResponseEntity<List> findZlecenia(@PathVariable("id") Long id, @PathVariable(value = "rola") String rola) {
         List<Zlecenie> zlecenie = null;
         try {
-            zlecenie = zlecenieService.findKlientById(id);
-            log.info("Zlecenia o id '{}' znaleziono", id);
+            if (rola.equals("Indywidualny")) {
+                zlecenie = zlecenieService.findKlientById(id);
+            }
+//            if (rola.equals("Firmy")) {
+//                zlecenie = zlecenieService.findFirmaById(id);
+//            }
+            if (rola.equals("Kierowca")) {
+                zlecenie = zlecenieService.findKierowcaById(id);
+            }
+            log.info("Znaleziono zlecenia dla użytkonwika o id "+id+" rola: "+rola);
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
         }
@@ -78,7 +86,7 @@ public class ZlecenieController {
     public ResponseEntity<List> findNew() {
         List<Zlecenie> zlecenie = null;
         try {
-            zlecenie = zlecenieService.findByStatus("FINISH");
+            zlecenie = zlecenieService.findByStatus("NOWE");
             log.info("Zlecenia o id '{}' znaleziono");
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());

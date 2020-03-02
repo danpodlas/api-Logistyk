@@ -16,4 +16,8 @@ public interface ZleceniaRepo extends JpaRepository<Zlecenie,Long> {
 
     List<Zlecenie> findZlecenieByKlient_id(long id );
 
+    List<Zlecenie> findZlecenieByKierowca_id(long id );
+
+//    List<Zlecenie> findZlecenieByZlec_firma_id(long id );
+
 }
