@@ -17,7 +17,6 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 
-
 @Slf4j
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -33,6 +32,10 @@ public class FirmyController {
         this.firmyService = firmyService;
         this.roleService= roleService;
         this.samochodyService=samochodyService;
+    }
+
+    public FirmyController() {
+
     }
 
     @GetMapping("/")
@@ -55,6 +58,8 @@ public class FirmyController {
 
     @GetMapping(value = "/moje/id={id}")
     public ResponseEntity findMojeAuto(@PathVariable("id") Long id) {
+        System.out.println("Wyszukiwanie auta dla firmy o id: "+id);
+
         Firma firma = null;
         Samochod samochod = null;
         try {
@@ -138,6 +143,26 @@ public class FirmyController {
 
         firmyService.update(firmaToUptade);
         log.info("Zaktualizowano dane firmy :'{}'", firmaToUptade.toString());
+        ResponseEntity.status(HttpStatus.OK).body(firmaToUptade);
+        return firmyService.update(firmaToUptade);
+    }
+
+    @PutMapping
+    public Firma updateAutoFirma(Long idfirmy, Long idAuta) {
+
+        Firma firmaToUptade = null;
+        try{
+            firmaToUptade = firmyService.findOne(idfirmy);
+
+            firmaToUptade.setSamochod(samochodyService.findOne(idAuta));
+
+        }catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+            ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        firmyService.update(firmaToUptade);
+        log.info("Zaktualizowano samochód :'{}'", firmaToUptade.toString());
         ResponseEntity.status(HttpStatus.OK).body(firmaToUptade);
         return firmyService.update(firmaToUptade);
     }

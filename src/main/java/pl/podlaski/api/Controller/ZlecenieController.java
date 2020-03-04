@@ -1,14 +1,15 @@
 package pl.podlaski.api.Controller;
 
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.podlaski.api.DAO.Constans.RoleName;
-import pl.podlaski.api.DAO.Entity.*;
+import pl.podlaski.api.DAO.Entity.Firma;
+import pl.podlaski.api.DAO.Entity.Kierowca;
+import pl.podlaski.api.DAO.Entity.Klient;
+import pl.podlaski.api.DAO.Entity.Zlecenie;
 import pl.podlaski.api.Service.FirmyService;
 import pl.podlaski.api.Service.KierowcyService;
 import pl.podlaski.api.Service.KlientService;
@@ -16,8 +17,6 @@ import pl.podlaski.api.Service.ZlecenieService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 

@@ -100,7 +100,7 @@ create TABLE Firma
 );
 
 insert into Firma(nazwafirmy,nip, telefonkontaktowy, miasto, ulica, nrdomu, email, haslo, numerkonta, roleid, samochodid)
-VALUES ('Transport Pilice','5276396974','300300300','Pilice', 'Warszawska', '16', 'f','f','59113010759875343098345956',3,5),
+VALUES ('Transport Pilice','5276396974','300300300','Pilice', 'Warszawska', '16', 'f','f','59113010759875343098345956',3,1),
        ('Transport Odludzie','1581476034','300300301','Odludzie', 'Polna', '1', 'odludzie@firma.pl','firma','53114011829548145256992672',3,4),
        ('Transport Mikoszewo','3944923621','300300302','Mikoszewo', 'Oka', '45', 'mikoszewo@firma.pl','firma','18902300064945248739451289',3,3),
        ('Transport Zakopanem','1097920936','300300303','Zakopanem', 'Polki', '5', 'zakopanem@firma.pl','firma','69124024257403114525577894',3,2),
@@ -158,4 +158,4 @@ insert into Zlecenie(zlec_firma_id, klient_id, adreszal, adresroz, przyjm_firma_
 VALUES ( null,1, 'Warszawa ul. Marywislka 44','Kraków, ul. Wioseena 12',1, 1,'Mirek tel. 500500500',350,3.0, 1050,'Palety',null,7000, '2020-01-03', '2020-01-03','2020-01-04','FINISH'),
        ( 1, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',null, 1,'Mirek tel. 500500500',350,2.8, 980,'Ubrania',null,9000, '2020-01-04', '2020-01-05',null,'INPROGRESS'),
        ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000, '2020-01-07', '2020-01-08', '2020-01-10','FINISH'),
-       ( 1,1, 'Lublin, ul. Kwiecista 42', 'Warszawa ul. Marywislka 44',null,2, 'Adam tel. 500500501',200,3.0, 600,'Węgiel',null,17000, '2020-01-09',null, null,'NOWE');
+       ( 2,1, 'Lublin, ul. Kwiecista 42', 'Warszawa ul. Marywislka 44',null,2, 'Adam tel. 500500501',200,3.0, 600,'Węgiel',null,17000, '2020-01-09',null, null,'NOWE');
