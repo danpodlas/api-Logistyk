@@ -23,7 +23,7 @@ create TABLE Samochod
     przebieg           int,
     numerrejestracyjny VARCHAR,
     typpojazdu         VARCHAR,
-    przyczepy         VARCHAR
+    przyczepy          VARCHAR
 );
 
 insert into Samochod(marka, model, rokprodukcji, przebieg, numerrejestracyjny, typpojazdu, przyczepy)
@@ -72,7 +72,7 @@ create TABLE Kierowca
     haslo            VARCHAR,
     numerkonta       VARCHAR,
     role_id          int,
-    samochodid          int
+    samochodid       int
 );
 insert into Kierowca(imie, nazwisko, peselnip, telefon, miasto, ulica, nrdomu, datazatrudnienia, email, haslo, numerkonta, role_id, samochodid)
 VALUES ('Justyna','Kierowca','68092283046','200200200','Kraków','Wawelska','65/21','2017-02-05','k','k','37967800023356457831088926',1,3),
@@ -105,7 +105,7 @@ VALUES ('Transport Pilice','5276396974','300300300','Pilice', 'Warszawska', '16'
        ('Transport Mikoszewo','3944923621','300300302','Mikoszewo', 'Oka', '45', 'mikoszewo@firma.pl','firma','18902300064945248739451289',3,3),
        ('Transport Zakopanem','1097920936','300300303','Zakopanem', 'Polki', '5', 'zakopanem@firma.pl','firma','69124024257403114525577894',3,2),
        ('Transport Bystre','3787365063','300300304','Bystre', 'Guzowa', '165', 'bystre@firma.pl','firma','98124068720569086993291301',3,1),
-       ('Transport Okawki','3819507308','300300305','Okawki', 'Mini', '290', 'okawki@firma.pl','firma','45955710164674550892065985',3,6),
+       ('Transport Okawki','3819507308','300300305','Okawki', 'Mini', '290', 'okawki@firma.pl','firma','45955710164674550892065985',3,null),
        ('Transport Miodowe','4164414488','300300306','Miodowe', 'Werska', '7', 'miodowe@firma.pl','firma','58967200085159627257546726',3,null);
 
 
@@ -113,21 +113,48 @@ drop table if exists Koszty cascade;
 create TABLE Koszty
 (
     id             INT IDENTITY PRIMARY KEY,
-    samochod_id    int,
-    radzajekosztow ENUM ( 'PALIWO', 'NAPRAWA', 'SERWIS', 'POMOC'),
+    radzajekosztow VARCHAR,
     kwota          DOUBLE,
     data           VARCHAR,
     notka          VARCHAR,
     firmy_id       int,
-    kierowca_id      int
+    kierowca_id    int
 );
 
-insert into Koszty(samochod_id, radzajekosztow, kwota, data, notka, firmy_id, kierowca_id)
-VALUES (1,'PALIWO',367.68,'2019-12-12','Paliwo tankowane w Bytomiu',null, 1 ),
-       (1,'SERWIS',200,'2019-12-13','Serwis silnika',null, 1 ),
-       (1,'NAPRAWA',800,'2019-12-19','Naprawa tylnego koła',null, 1 ),
-       (1,'POMOC',150,'2019-12-19','Pęknięte opony na trasie',null, 1 ),
-       (1,'PALIWO',367.68,'2019-12-21','Paliwo tankowane w Opolu',null, 1 );
+insert into Koszty(radzajekosztow, kwota, data, notka, firmy_id, kierowca_id)
+VALUES ('PALIWO', 367.68, '2019-12-12', 'Paliwo tankowane w Bytomiu', null, 1),
+       ('SERWIS', 200, '2019-12-13', 'Serwis silnika', null, 1),
+       ('NAPRAWA', 800, '2019-12-19', 'Naprawa tylnego koła', null, 1),
+       ('POMOC', 150, '2019-12-19', 'Pęknięte opony na trasie', null, 1),
+       ('PALIWO', 367.68, '2019-12-21', 'Paliwo tankowane w Opolu', null, 1),
+
+       ('Naprawa', 200, '2019-01-01', 'Serwis silnika', 1, null),
+       ('Paliwo', 500, '2019-01-20', 'Naprawa tylnego koła', 1, null),
+       ('Opłaty', 150, '2019-02-05', 'Przejazd', 1, null),
+       ('Paliwo', 800, '2019-02-20', null, 1, null),
+       ('Opłaty', 50, '2019-03-05', 'Przejazd', 1, null),
+       ('Paliwo', 300, '2019-03-20', null, 1, null),
+       ('Opłaty', 100, '2019-04-05', 'Przejazd', 1, null),
+       ('Paliwo', 500, '2019-04-20', null, 1, null),
+       ('Opłaty', 150, '2019-05-05', 'Przejazd', 1, null),
+       ('Paliwo', 800, '2019-05-20', null, 1, null),
+       ('Opłaty', 350, '2019-06-05', 'Przejazd', 1, null),
+       ('Paliwo', 600, '2019-06-20', null, 1, null),
+       ('Opłaty', 150, '2019-07-05', 'Przejazd', 1, null),
+       ('Paliwo', 550, '2019-07-20', null, 1, null),
+       ('Opłaty', 50, '2019-08-05', 'Przejazd', 1, null),
+       ('Paliwo', 300, '2019-08-20', null, 1, null),
+       ('Opłaty', 100, '2019-09-05', 'Przejazd', 1, null),
+       ('Paliwo', 500, '2019-09-20', null, 1, null),
+       ('Opłaty', 150, '2019-10-05', 'Przejazd', 1, null),
+       ('Paliwo', 800, '2019-10-20', null, 1, null),
+       ('Opłaty', 350, '2019-11-05', 'Przejazd', 1, null),
+       ('Paliwo', 600, '2019-11-20', null, 1, null),
+       ('Opłaty', 150, '2019-12-05', 'Przejazd', 1, null),
+       ('Paliwo', 550, '2019-12-20', null, 1, null),
+       ('Paliwo', 500, '2020-01-20', 'Naprawa tylnego koła', 1, null),
+       ('Opłaty', 150, '2020-02-05', 'Przejazd', 1, null),
+       ('Paliwo', 800, '2020-02-20', null, 1, null);
 
 
 
@@ -155,7 +182,54 @@ create TABLE Zlecenie
 );
 
 insert into Zlecenie(zlec_firma_id, klient_id, adreszal, adresroz, przyjm_firma_id, kierowca_id, oskontakt, ilosckm, stawka, wartzlec, typladunku, specjalny, waga, datautworzenia, dataprzyjecia, datazakonczenia,status)
-VALUES ( null,1, 'Warszawa ul. Marywislka 44','Kraków, ul. Wioseena 12',1, 1,'Mirek tel. 500500500',350,3.0, 1050,'Palety',null,7000, '2020-01-03', '2020-01-03','2020-01-04','FINISH'),
-       ( 1, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',null, 1,'Mirek tel. 500500500',350,2.8, 980,'Ubrania',null,9000, '2020-01-04', '2020-01-05',null,'INPROGRESS'),
-       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000, '2020-01-07', '2020-01-08', '2020-01-10','FINISH'),
-       ( 2,1, 'Lublin, ul. Kwiecista 42', 'Warszawa ul. Marywislka 44',null,2, 'Adam tel. 500500501',200,3.0, 600,'Węgiel',null,17000, '2020-01-09',null, null,'NOWE');
+VALUES ( null,1, 'Warszawa ul. Marywislka 44','Kraków, ul. Wioseena 12',1, 1,'Mirek tel. 500500500',350,3.0, 1050,'Palety',null,7000, '2020-01-03', '2020-01-03','2020-01-04','Zakończone'),
+       ( 1, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',null, 1,'Mirek tel. 500500500',350,2.8, 980,'Ubrania',null,9000, '2020-01-04', '2020-01-05',null,'W realizacji'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000, '2020-01-07', '2020-01-08', '2020-01-10','Zakończone'),
+       ( null,1, 'Lublin, ul. Kwiecista 42', 'Warszawa ul. Marywislka 44',null,null, 'Adam tel. 500500501',200,3.0, 600,'Węgiel',null,17000, '2020-01-09',null, null,'Nowe'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 700,'Ubrania',null,9000, '2019-01-04', '2019-01-04','2019-01-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000, '2019-01-07', '2019-01-07', '2019-01-08','Zakończone'),
+
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 800,'Ubrania',null,9000, '2019-01-04', '2019-01-04','2019-01-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 552,'Piach',null,17000, '2019-01-07', '2019-01-07', '2019-01-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 965,'Ubrania',null,9000, '2019-02-04', '2019-02-04','2019-02-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 572,'Piach',null,17000, '2019-02-07', '2019-02-07', '2019-02-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 123,'Ubrania',null,9000, '2019-03-04', '2019-03-04','2019-03-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 471,'Piach',null,17000, '2019-03-07', '2019-03-07', '2019-03-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 852,'Ubrania',null,9000, '2019-04-04', '2019-04-04','2019-04-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 963,'Piach',null,17000, '2019-04-07', '2019-04-07', '2019-04-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 143,'Ubrania',null,9000, '2019-05-04', '2019-05-04','2019-05-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 852,'Piach',null,17000, '2019-05-07', '2019-05-07', '2019-05-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 437,'Ubrania',null,9000, '2019-06-04', '2019-06-04','2019-07-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 821,'Piach',null,17000, '2019-06-07', '2019-06-07', '2019-07-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 934,'Ubrania',null,9000, '2019-08-04', '2019-08-04','2019-08-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000, '2019-08-07', '2019-08-07', '2019-08-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 741,'Ubrania',null,9000, '2019-09-04', '2019-09-04','2019-09-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 258,'Piach',null,17000, '2019-09-07', '2019-09-07', '2019-09-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 700,'Ubrania',null,9000, '2019-10-04', '2019-10-04','2019-10-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 369,'Piach',null,17000, '2019-10-07', '2019-10-07', '2019-10-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 951,'Ubrania',null,9000, '2019-11-04', '2019-11-04','2019-11-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 753,'Piach',null,17000, '2019-11-07', '2019-11-07', '2019-11-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 357,'Ubrania',null,9000, '2019-12-04', '2019-12-04','2019-12-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 456,'Piach',null,17000, '2019-12-07', '2019-12-07', '2019-12-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 789,'Ubrania',null,9000, '2020-01-04', '2020-01-04','2020-01-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 540,'Piach',null,17000, '2020-01-07', '2020-01-07', '2020-01-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 700,'Ubrania',null,9000, '2020-02-04', '2020-02-04','2020-02-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 495,'Piach',null,17000, '2020-02-07', '2020-02-07', '2020-02-08','Zakończone'),
+
+       ( 2, null, 'Kraków, ul. Wioseena 12','Warszawa ul. Marywislka 44',1, null,'Mirek tel. 500500500',350,2, 665,'Ubrania',null,9000, '2020-03-04', '2020-03-04','2020-03-05','Zakończone'),
+       ( null,1, 'Warszawa ul. Marywislka 44','Lublin, ul. Kwiecista 42',1, 2,'Adam tel. 500500501',200,2.7, 552,'Piach',null,17000, '2020-03-07', '2020-03-07', '2020-03-08','Zakończone');
+

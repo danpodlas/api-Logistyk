@@ -12,11 +12,11 @@ public class Koszty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "samochod_id", referencedColumnName = "id")
-    private Samochod samochodKoszty;
+//    @OneToOne
+//    @JoinColumn(name = "samochod_id", referencedColumnName = "id")
+//    private Samochod samochodKoszty;
 
-    private RodzajeKosztow radzajekosztow;
+    private String radzajekosztow;
     private Double kwota;
 
     @Temporal(TemporalType.DATE)
@@ -43,19 +43,20 @@ public class Koszty {
         this.id = id;
     }
 
-    public Samochod getSamochodKoszty() {
-        return samochodKoszty;
-    }
+//    public Samochod getSamochodKoszty() {
+//        return samochodKoszty;
+//    }
+//
+//    public void setSamochodKoszty(Samochod samochodKoszty) {
+//        this.samochodKoszty = samochodKoszty;
+//    }
 
-    public void setSamochodKoszty(Samochod samochodKoszty) {
-        this.samochodKoszty = samochodKoszty;
-    }
 
-    public RodzajeKosztow getRadzajekosztow() {
+    public String getRadzajekosztow() {
         return radzajekosztow;
     }
 
-    public void setRadzajekosztow(RodzajeKosztow radzajekosztow) {
+    public void setRadzajekosztow(String radzajekosztow) {
         this.radzajekosztow = radzajekosztow;
     }
 
@@ -103,7 +104,6 @@ public class Koszty {
     public String toString() {
         return "Koszty{" +
                 "id=" + id +
-                ", samochodKoszty=" + samochodKoszty +
                 ", radzajekosztow=" + radzajekosztow +
                 ", kwota=" + kwota +
                 ", data='" + data + '\'' +

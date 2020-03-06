@@ -56,4 +56,8 @@ public class ZlecenieService {
         return zleceniaRepo.findAllByPrzyjmFirmaIdOrZlecFirmaId(s,s);
     }
 
+//    public List<Zlecenie> findKosztyFirmy(long a, String dateOne, String dateTwo){
+//        return zleceniaRepo.findKosztyFirmy(a,dateOne,dateTwo);
+//    }
+
 }

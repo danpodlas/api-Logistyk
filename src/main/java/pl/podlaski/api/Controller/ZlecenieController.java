@@ -17,6 +17,8 @@ import pl.podlaski.api.Service.ZlecenieService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -80,13 +82,11 @@ public class ZlecenieController {
         return ResponseEntity.status(HttpStatus.OK).body(zlecenie);
     }
 
-
-
     @GetMapping(value = "/new")
     public ResponseEntity<List> findNew() {
         List<Zlecenie> zlecenie = null;
         try {
-            zlecenie = zlecenieService.findByStatus("NOWE");
+            zlecenie = zlecenieService.findByStatus("Nowe");
             log.info("Zlecenia o id '{}' znaleziono");
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
@@ -125,7 +125,7 @@ public class ZlecenieController {
         return ResponseEntity.status(HttpStatus.OK).body(zlecenie1);
     }
 
-    @PutMapping(value = "/przyjmij/idzlec={idzlec}&rola={rola}&id={id}")
+    @PostMapping(value = "/przyjmij/idzlec={idzlec}&rola={rola}&id={id}")
     public ResponseEntity<?> przyjmijZlecenie(@PathVariable(value = "idzlec") Long idzlec, @PathVariable(value = "rola") String rola, @PathVariable(value = "id") Long id) {
         System.out.println("idzlec "+idzlec+ " id: " + id + " rola: " + rola);
         Zlecenie zlecenieToUpdate = null;
@@ -165,7 +165,7 @@ public class ZlecenieController {
         return ResponseEntity.status(HttpStatus.OK).body(zlecenie1);
     }
 
-    @PutMapping(value = "/zakoncz/idzlec={idzlec}")
+    @PostMapping(value = "/zakoncz/idzlec={idzlec}")
     public ResponseEntity<?> zakonczZlecenie(@PathVariable(value = "idzlec") Long idzlec) {
         Zlecenie zlecenieToUpdate = null;
         Zlecenie zlecenie1 = null;
@@ -184,6 +184,39 @@ public class ZlecenieController {
         zlecenie1 = zlecenieService.update(zlecenieToUpdate);
         log.info("Zlecenie {} zakonczone", zlecenie1.toString());
         return ResponseEntity.status(HttpStatus.OK).body(zlecenie1);
+    }
+
+
+    @GetMapping(value = "/graph/id={id}")
+    public ResponseEntity<?> valueGraph(@PathVariable(value = "id") Long id) {
+        List<Zlecenie> zlecenie = null;
+
+        String patter = "dd.MM.yyyy";
+
+        //zakres dat od pierwszy dzien miesiaca rok temu do ostatni dzien poprzedniego miesiaca
+        Calendar calD = Calendar.getInstance();
+        calD.add(Calendar.MONTH,-1);
+        calD.set(Calendar.DATE, calD.getActualMaximum(Calendar.DATE));
+        Date lastDayOfMonth = calD.getTime();
+        SimpleDateFormat simpleDateFormate = new SimpleDateFormat(patter);
+        String dataDo = simpleDateFormate.format(lastDayOfMonth);
+        System.out.println(dataDo);
+
+        Calendar calB = Calendar.getInstance();
+        calB.add(Calendar.MONTH,-12);
+        calB.set(Calendar.DATE, calB.getActualMinimum(Calendar.DATE));
+        Date firstDayOfMonth = calB.getTime();
+        SimpleDateFormat simple = new SimpleDateFormat(patter);
+        String dataOd = simple.format(firstDayOfMonth);
+        System.out.println(dataOd);
+
+        try {
+//            zlecenie = zlecenieService.findKosztyFirmy(id, dataOd, dataDo);
+            log.info("Zlecenia o id '{}' znaleziono");
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(zlecenie);
     }
 
 

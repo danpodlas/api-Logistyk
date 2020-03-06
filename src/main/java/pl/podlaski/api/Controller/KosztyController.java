@@ -16,6 +16,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Optional;
+
 @Slf4j
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -23,13 +24,14 @@ import java.util.Optional;
 public class KosztyController {
 
     private KosztyService kosztyService;
-    private SamochodyService samochodyService;
     private FirmyService firmyService;
     private KierowcyService kierowcyService;
 
     @Autowired
-    public KosztyController(KosztyService kosztyService) {
+    public KosztyController(KosztyService kosztyService, FirmyService firmyService, KierowcyService kierowcyService) {
         this.kosztyService = kosztyService;
+        this.firmyService=firmyService;
+        this.kierowcyService=kierowcyService;
     }
 
     @GetMapping("/")
@@ -50,40 +52,84 @@ public class KosztyController {
         return ResponseEntity.status(HttpStatus.OK).body(koszty);
     }
 
-    @GetMapping(value = "/samochod/{id}")
-    public ResponseEntity findAutoKoszty(@PathVariable("id") Long id) {
-        Optional<Koszty> koszty = null;
-        try {
-            koszty = kosztyService.findSamochod(id);
-            log.info("Samochód,koszty with id '{}' found", id);
-        } catch (EntityNotFoundException e) {
-            log.error(e.getMessage());
+//    @GetMapping(value = "/samochod/{id}")
+//    public ResponseEntity findAutoKoszty(@PathVariable("id") Long id) {
+//        Optional<Koszty> koszty = null;
+//        try {
+//            koszty = kosztyService.findSamochod(id);
+//            log.info("Samochód,koszty with id '{}' found", id);
+//        } catch (EntityNotFoundException e) {
+//            log.error(e.getMessage());
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(koszty);
+//    }
+
+//    @GetMapping(value = "/firma/id={id}")
+//    public ResponseEntity findFrimaKoszty(@PathVariable("id") Long id) {
+//        Optional<Koszty> koszty = null;
+//        try {
+//            koszty = kosztyService.findFirma(id);
+//            log.info("Firma, koszty with id '{}' found", id);
+//        } catch (EntityNotFoundException e) {
+//            log.error(e.getMessage());
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(koszty);
+//    }
+//
+//    @GetMapping(value = "/kierowca/id={id}")
+//    public ResponseEntity findKierowcaKoszty(@PathVariable("id") Long id) {
+//        Optional<Koszty> koszty = null;
+//        try {
+//            koszty = kosztyService.findKierowca(id);
+//            log.info("Kierowca, koszty with id '{}' found", id);
+//        } catch (EntityNotFoundException e) {
+//            log.error(e.getMessage());
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(koszty);
+//    }
+
+    @PostMapping(value = "/kierowca/id={id}")
+    public ResponseEntity<?> addKierowcaKoszty(@PathVariable(value = "id") Long id, @RequestBody Koszty koszty) {
+        Koszty koszty1;
+        log.info("id " + id);
+        log.info("koszty " + koszty);
+
+        Kierowca kierowca = null;
+        kierowca = kierowcyService.findId(id);
+        log.info("koszty " + kierowca);
+        if (kierowca == null) {
+            System.out.println("kierowca");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("kierowca is null");
+        } else {
+            koszty.setKosztyKierowca(kierowca);
+            System.out.println("kierowca: " + kierowca);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(koszty);
+        koszty1 = kosztyService.save(koszty);
+
+        log.info("Koszty {} dodane", koszty1.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(koszty1);
     }
 
-    @GetMapping(value = "/firma/{id}")
-    public ResponseEntity findFrimaKoszty(@PathVariable("id") Long id) {
-        Optional<Koszty> koszty = null;
-        try {
-            koszty = kosztyService.findFirma(id);
-            log.info("Firma, koszty with id '{}' found", id);
-        } catch (EntityNotFoundException e) {
-            log.error(e.getMessage());
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(koszty);
-    }
+    @PostMapping(value = "/firmy/id={id}")
+    public ResponseEntity<?> addFirmyKoszty(@PathVariable(value = "id") Long id, @RequestBody Koszty koszty) {
+        Koszty koszty1;
+        log.info("id " + id);
+        log.info("koszty " + koszty);
 
-    @GetMapping(value = "/kierowca/{id}")
-    public ResponseEntity findKierowcaKoszty(@PathVariable("id") Long id) {
-        Optional<Koszty> koszty = null;
-        try {
-            koszty = kosztyService.findKierowca(id);
-            log.info("Kierowca, koszty with id '{}' found", id);
-        } catch (EntityNotFoundException e) {
-            log.error(e.getMessage());
+        Firma firmy = null;
+        firmy = firmyService.findId(id);
+        log.info("koszty " + firmy);
+        if (firmy == null) {
+            System.out.println("kierowca");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("kierowca is null");
+        } else {
+            koszty.setKosztyFirmy(firmy);
+            System.out.println("kierowca: " + firmy);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(koszty);
+        koszty1 = kosztyService.save(koszty);
+
+        log.info("Koszty {} dodane", koszty1.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(koszty1);
     }
 
     @PostMapping
@@ -93,14 +139,12 @@ public class KosztyController {
         return ResponseEntity.status(HttpStatus.CREATED).body(koszty);
     }
 
-
     @PutMapping(value = "/{id}")
-    public Koszty updateKoszty(@PathVariable(value = "id") Long id,@RequestBody Koszty koszty) {
+    public Koszty updateKoszty(@PathVariable(value = "id") Long id, @RequestBody Koszty koszty) {
 
         Koszty kosztyToUptade = null;
-        try{
+        try {
             kosztyToUptade = kosztyService.findOne(id);
-            kosztyToUptade.setSamochodKoszty(koszty.getSamochodKoszty());
             kosztyToUptade.setRadzajekosztow(koszty.getRadzajekosztow());
             kosztyToUptade.setKwota(koszty.getKwota());
             kosztyToUptade.setData(koszty.getData());
@@ -108,7 +152,7 @@ public class KosztyController {
             kosztyToUptade.setKosztyFirmy(koszty.getKosztyFirmy());
             kosztyToUptade.setKosztyKierowca(koszty.getKosztyKierowca());
 
-        }catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }

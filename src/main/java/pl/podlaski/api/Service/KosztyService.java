@@ -40,10 +40,9 @@ public class KosztyService {
         kosztyRepo.deleteById(id);
     }
 
-
-    public Optional<Koszty> findSamochod(long id) {
-        return kosztyRepo.findSamochodById(id);
-    }
+//    public Optional<Koszty> findSamochod(long id) {
+//        return kosztyRepo.findSamochodById(id);
+//    }
 
     public Optional<Koszty> findFirma(long id) {
         return kosztyRepo.findFirmyById(id);

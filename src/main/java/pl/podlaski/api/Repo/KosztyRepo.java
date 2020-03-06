@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import pl.podlaski.api.DAO.Entity.Koszty;
 
-import java.util.List;
 import java.util.Optional;
 
 
