@@ -115,7 +115,7 @@ create TABLE Koszty
     id             INT IDENTITY PRIMARY KEY,
     radzajekosztow VARCHAR,
     kwota          DOUBLE,
-    data           VARCHAR,
+    data           DATE,
     notka          VARCHAR,
     firmy_id       int,
     kierowca_id    int

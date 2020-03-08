@@ -30,7 +30,7 @@ public interface ZleceniaRepo extends JpaRepository<Zlecenie, Long> {
 
 //    List<Zlecenie> findKosztyFirmy(long a, String dateOne, String dateTwo);
 
-//    @Query(value = "select z from ZLECENIE z where z.DATAZAKONCZENIA BETWEEN DATE ':DateOne' AND ':DateTwo' and z.PRZYJM_FIRMA_ID =:id;")
-//    List<Zlecenie> findKosztyFirmy(@Param("id") long id, @Param("DateOne") String DateOne,@Param("DateTwo") String DateTwo);
+    @Query(value = "from Zlecenie z where z.przyjmFirma.id=:id AND z.datazakonczenia BETWEEN :startDate AND :endDate ORDER BY z.datazakonczenia")
+    List<Zlecenie> getAllBetweenDates(@Param("id")long id, @Param("startDate")Date startDate,@Param("endDate")Date endDate);
 
 }

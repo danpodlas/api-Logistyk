@@ -17,6 +17,7 @@ import pl.podlaski.api.Service.ZlecenieService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -188,7 +189,7 @@ public class ZlecenieController {
 
 
     @GetMapping(value = "/graph/id={id}")
-    public ResponseEntity<?> valueGraph(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> valueGraph(@PathVariable(value = "id") Long id) throws ParseException {
         List<Zlecenie> zlecenie = null;
 
         String patter = "dd.MM.yyyy";
@@ -201,6 +202,7 @@ public class ZlecenieController {
         SimpleDateFormat simpleDateFormate = new SimpleDateFormat(patter);
         String dataDo = simpleDateFormate.format(lastDayOfMonth);
         System.out.println(dataDo);
+        Date date2=new SimpleDateFormat("dd.MM.yyyy").parse(dataDo);
 
         Calendar calB = Calendar.getInstance();
         calB.add(Calendar.MONTH,-12);
@@ -208,11 +210,13 @@ public class ZlecenieController {
         Date firstDayOfMonth = calB.getTime();
         SimpleDateFormat simple = new SimpleDateFormat(patter);
         String dataOd = simple.format(firstDayOfMonth);
+
+        Date date1=new SimpleDateFormat("dd.MM.yyyy").parse(dataOd);
         System.out.println(dataOd);
 
         try {
-//            zlecenie = zlecenieService.findKosztyFirmy(id, dataOd, dataDo);
-            log.info("Zlecenia o id '{}' znaleziono");
+            zlecenie = zlecenieService.findZyskiFirmy(id, date1, date2);
+            log.info("Zlecenia sprzed roku znaleziono");
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
         }

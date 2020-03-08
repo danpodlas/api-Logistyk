@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.podlaski.api.DAO.Entity.Zlecenie;
 import pl.podlaski.api.Repo.ZleceniaRepo;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -56,8 +57,8 @@ public class ZlecenieService {
         return zleceniaRepo.findAllByPrzyjmFirmaIdOrZlecFirmaId(s,s);
     }
 
-//    public List<Zlecenie> findKosztyFirmy(long a, String dateOne, String dateTwo){
-//        return zleceniaRepo.findKosztyFirmy(a,dateOne,dateTwo);
-//    }
+    public List<Zlecenie> findZyskiFirmy(long a, Date dateOne, Date dateTwo){
+        return zleceniaRepo.getAllBetweenDates(a,dateOne,dateTwo);
+    }
 
 }

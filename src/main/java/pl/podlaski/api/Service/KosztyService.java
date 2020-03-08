@@ -6,8 +6,10 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.podlaski.api.DAO.Entity.Kierowca;
 import pl.podlaski.api.DAO.Entity.Koszty;
+import pl.podlaski.api.DAO.Entity.Zlecenie;
 import pl.podlaski.api.Repo.KosztyRepo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +52,10 @@ public class KosztyService {
 
     public Optional<Koszty> findKierowca(long id) {
         return kosztyRepo.findKierowcaById(id);
+    }
+
+    public List<Koszty> findKosztyFirmy(long a, Date dateOne, Date dateTwo){
+        return kosztyRepo.getAllBetweenDates(a,dateOne,dateTwo);
     }
 
 }

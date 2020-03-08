@@ -6,14 +6,15 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.podlaski.api.DAO.Entity.Firma;
-import pl.podlaski.api.DAO.Entity.Kierowca;
-import pl.podlaski.api.DAO.Entity.Koszty;
-import pl.podlaski.api.DAO.Entity.Role;
+import pl.podlaski.api.DAO.Entity.*;
 import pl.podlaski.api.Service.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +52,42 @@ public class KosztyController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(koszty);
     }
+
+    @GetMapping(value = "/graph/id={id}")
+    public ResponseEntity<?> valueGraph(@PathVariable(value = "id") Long id) throws ParseException {
+        List<Koszty> kosztyList = null;
+
+        String patter = "dd.MM.yyyy";
+
+        //zakres dat od pierwszy dzien miesiaca rok temu do ostatni dzien poprzedniego miesiaca
+        Calendar calD = Calendar.getInstance();
+        calD.add(Calendar.MONTH,-1);
+        calD.set(Calendar.DATE, calD.getActualMaximum(Calendar.DATE));
+        Date lastDayOfMonth = calD.getTime();
+        SimpleDateFormat simpleDateFormate = new SimpleDateFormat(patter);
+        String dataDo = simpleDateFormate.format(lastDayOfMonth);
+        System.out.println(dataDo);
+        Date date2=new SimpleDateFormat("dd.MM.yyyy").parse(dataDo);
+
+        Calendar calB = Calendar.getInstance();
+        calB.add(Calendar.MONTH,-12);
+        calB.set(Calendar.DATE, calB.getActualMinimum(Calendar.DATE));
+        Date firstDayOfMonth = calB.getTime();
+        SimpleDateFormat simple = new SimpleDateFormat(patter);
+        String dataOd = simple.format(firstDayOfMonth);
+
+        Date date1=new SimpleDateFormat("dd.MM.yyyy").parse(dataOd);
+        System.out.println(dataOd);
+
+        try {
+            kosztyList = kosztyService.findKosztyFirmy(id, date1, date2);
+            log.info("Koszty sprzed roku znaleziono");
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(kosztyList);
+    }
+
 
 //    @GetMapping(value = "/samochod/{id}")
 //    public ResponseEntity findAutoKoszty(@PathVariable("id") Long id) {
